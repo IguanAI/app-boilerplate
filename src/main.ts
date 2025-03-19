@@ -70,14 +70,14 @@ const i18n = createI18n({
 initializeAnalytics();
 initializeLogging();
 
-// Custom animation function
+// Custom animation function - simplified for better performance
 const customFadeAnimation = (_: HTMLElement, opts: any): Animation => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
   
-  // Create the animation
+  // Create the animation with extremely simple setup
   const animation = createAnimation()
-    .duration(300);
+    .duration(200);
   
   // Handle the leaving element
   if (leavingEl) {
@@ -87,7 +87,7 @@ const customFadeAnimation = (_: HTMLElement, opts: any): Animation => {
     // Remove class after animation completes
     setTimeout(() => {
       leavingEl.classList.remove('ion-page-leaving');
-    }, 250);
+    }, 150);
   }
   
   // Handle the entering element
@@ -98,7 +98,7 @@ const customFadeAnimation = (_: HTMLElement, opts: any): Animation => {
     // Remove class after animation completes
     setTimeout(() => {
       enteringEl.classList.remove('ion-page-entering');
-    }, 300);
+    }, 200);
   }
   
   // Return the animation

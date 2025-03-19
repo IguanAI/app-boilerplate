@@ -305,6 +305,7 @@ ion-router-outlet > .ion-page {
   overflow: auto;
   display: flex;
   flex-direction: column;
+  transform: translateZ(0);
   contain: layout style;
   backface-visibility: hidden;
 }

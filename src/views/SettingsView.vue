@@ -241,14 +241,14 @@ onMounted(() => {
 <style scoped>
 /* Updated component styles */
 .app-background {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   overflow: hidden;
   z-index: -10;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 .bg-blob-1 {
@@ -306,6 +306,8 @@ onMounted(() => {
   min-height: 100vh;
   position: relative;
   padding: 1.5rem;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @media (min-width: 768px) {
@@ -546,23 +548,17 @@ ion-select::part(text) {
 
 /* Animation for settings cards */
 .app-card {
-  animation: fadeIn 0.4s cubic-bezier(0.33, 1, 0.68, 1) forwards;
-  will-change: transform, opacity;
+  opacity: 0;
+  animation: cardFadeIn 300ms ease-out forwards;
 }
 
-.app-card:nth-child(1) { animation-delay: 0.05s; }
-.app-card:nth-child(2) { animation-delay: 0.1s; }
-.app-card:nth-child(3) { animation-delay: 0.15s; }
-.app-card:nth-child(4) { animation-delay: 0.2s; }
+.app-card:nth-child(1) { animation-delay: 20ms; }
+.app-card:nth-child(2) { animation-delay: 60ms; }
+.app-card:nth-child(3) { animation-delay: 100ms; }
+.app-card:nth-child(4) { animation-delay: 140ms; }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes cardFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 </style>

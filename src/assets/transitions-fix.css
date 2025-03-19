@@ -1,34 +1,8 @@
 /* 
- * Custom fade down/up transitions
+ * Clean, simple page transitions
  */
 
-/* Custom fade down/up transitions */
-
-/* Define keyframes for fade-in-up animation */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Define keyframes for fade-out-down animation */
-@keyframes fadeOutDown {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-}
-
-/* Apply to pages */
+/* Base page styles */
 .ion-page {
   width: 100%;
   height: 100%;
@@ -43,18 +17,30 @@
   contain: layout size style;
   overflow: hidden;
   z-index: 0;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
-/* Entering page animation */
+/* Simple fade transition - no movement */
+@keyframes simpleFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes simpleFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Apply to pages */
 .ion-page-entering {
-  animation: fadeInUp 300ms cubic-bezier(0.33, 1, 0.68, 1) forwards;
-  will-change: transform, opacity;
+  animation: simpleFadeIn 200ms forwards;
+  z-index: 2;
 }
 
-/* Leaving page animation */
 .ion-page-leaving {
-  animation: fadeOutDown 250ms cubic-bezier(0.32, 0, 0.67, 0) forwards;
-  will-change: transform, opacity;
+  animation: simpleFadeOut 150ms forwards;
+  z-index: 1;
 }
 
 /* Handle invisible pages */
@@ -65,6 +51,8 @@
 /* Override default Ionic animations */
 .ion-page-transitioning {
   pointer-events: none !important;
+  transform: translateZ(0);
+  will-change: opacity;
 }
 
 /* Prevent both pages from showing simultaneously */
@@ -75,11 +63,14 @@
 /* Fix for router outlet */
 ion-router-outlet {
   contain: none;
+  z-index: 0;
 }
 
 /* Make sure transitions work properly */
 ion-content {
   contain: style layout;
+  transform: translateZ(0);
+  will-change: opacity;
 }
 
 /* Set page background to transparent */
