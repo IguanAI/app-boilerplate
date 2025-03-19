@@ -47,7 +47,7 @@
 
 <script setup lang="ts">
 import { IonButton, IonIcon } from '@ionic/vue';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, onActivated, ref, watch, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { logInOutline, settingsOutline } from 'ionicons/icons';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
@@ -55,6 +55,7 @@ import ThemeSwitcher from '@/components/common/ThemeSwitcher.vue';
 import LanguageSwitcher from '@/components/common/LanguageSwitcher.vue';
 import { trackScreenView } from '@/services/analytics';
 import { useThemeStore } from '@/stores/themeStore';
+import { onIonViewDidEnter, onIonViewWillEnter } from '@ionic/vue';
 /* The following imports are not directly used in this component but kept for reference */
 /* import logoWhite from '@/assets/images/logo_white.png';
 import logoBlack from '@/assets/images/logo_black.png'; */
@@ -82,10 +83,31 @@ watch(() => themeStore.currentTheme, () => {
   checkDarkMode();
 });
 
-// Track screen view for analytics and initialize theme
-onMounted(() => {
+// Function to initialize the view
+const initializeView = () => {
   trackScreenView('Home');
   checkDarkMode();
+  
+  // Force the component to be visible - run both immediately and after a small delay
+  nextTick(() => {
+    const container = document.querySelector('.app-container');
+    if (container) {
+      container.classList.add('force-visible');
+    }
+    
+    // Apply a second time after a brief delay to handle edge cases
+    setTimeout(() => {
+      const containerDelayed = document.querySelector('.app-container');
+      if (containerDelayed) {
+        containerDelayed.classList.add('force-visible');
+      }
+    }, 100);
+  });
+};
+
+// Track screen view for analytics and initialize theme
+onMounted(() => {
+  initializeView();
   
   // Also listen for system theme changes
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
@@ -93,6 +115,20 @@ onMounted(() => {
       checkDarkMode();
     }
   });
+});
+
+// Handle keep-alive activation and return from background
+onActivated(() => {
+  initializeView();
+});
+
+// Use Ionic lifecycle hooks for additional reliability
+onIonViewWillEnter(() => {
+  initializeView();
+});
+
+onIonViewDidEnter(() => {
+  initializeView();
 });
 </script>
 
@@ -169,6 +205,12 @@ onMounted(() => {
   transform: translateZ(0);
   backface-visibility: hidden;
   opacity: 1 !important;
+}
+
+.force-visible {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: flex !important;
 }
 
 @media (min-width: 768px) {

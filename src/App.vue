@@ -68,7 +68,14 @@
       </ion-content>
     </ion-menu>
     
-    <ion-router-outlet id="main-content" />
+    <ion-router-outlet id="main-content">
+      <router-view v-slot="{ Component }">
+        <keep-alive>
+          <component :is="Component" v-if="$route.meta.keepAlive" />
+        </keep-alive>
+        <component :is="Component" v-if="!$route.meta.keepAlive" />
+      </router-view>
+    </ion-router-outlet>
     
     <!-- Loading overlay -->
     <ion-loading
@@ -113,6 +120,7 @@ import {
   IonToggle,
   menuController
 } from '@ionic/vue';
+import { onIonViewDidEnter, onIonViewWillEnter } from '@ionic/vue';
 import {
   homeOutline,
   settingsOutline,
