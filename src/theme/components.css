@@ -533,21 +533,53 @@ ion-select::part(icon) {
    ========================================================================== */
 
 /* Modern Menu */
-.modern-menu {
+ion-menu.modern-menu {
   --width: 280px;
-  --background: var(--card-background-light);
+  --background: rgba(255, 255, 255, 1) !important;
 }
 
-.dark .modern-menu {
-  --background: var(--card-background-dark);
+/* Target all modern menu elements */
+ion-menu.modern-menu::part(backdrop) {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+ion-menu.modern-menu::part(container) {
+  background: rgba(255, 255, 255, 1) !important;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+html.dark ion-menu.modern-menu,
+.dark ion-menu.modern-menu {
+  --background: rgba(18, 18, 18, 1) !important;
+}
+
+html.dark ion-menu.modern-menu::part(container),
+.dark ion-menu.modern-menu::part(container) {
+  background: rgba(18, 18, 18, 1) !important;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Menu Content */
-.menu-content {
+ion-menu.modern-menu ion-content.menu-content {
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: 0;
+  --background: rgba(255, 255, 255, 1) !important;
+}
+
+ion-menu.modern-menu ion-content.menu-content::part(scroll) {
+  background: rgba(255, 255, 255, 1) !important;
+}
+
+html.dark ion-menu.modern-menu ion-content.menu-content,
+.dark ion-menu.modern-menu ion-content.menu-content {
+  --background: rgba(18, 18, 18, 1) !important;
+}
+
+html.dark ion-menu.modern-menu ion-content.menu-content::part(scroll),
+.dark ion-menu.modern-menu ion-content.menu-content::part(scroll) {
+  background: rgba(18, 18, 18, 1) !important;
 }
 
 /* Menu Header */
@@ -739,6 +771,47 @@ ion-select::part(icon) {
 .menu-item:nth-child(4) { animation-delay: 0.4s; }
 
 /* ==========================================================================
+   iOS & Device-Specific Fixes
+   ========================================================================== */
+   
+/* Additional iOS-specific fixes */
+.ios ion-menu.modern-menu {
+  --background: rgba(255, 255, 255, 1) !important;
+}
+
+.ios ion-menu.modern-menu::part(container) {
+  background: rgba(255, 255, 255, 1) !important;
+}
+
+.ios.dark ion-menu.modern-menu,
+.ios .dark ion-menu.modern-menu {
+  --background: rgba(18, 18, 18, 1) !important;
+}
+
+.ios.dark ion-menu.modern-menu::part(container),
+.ios .dark ion-menu.modern-menu::part(container) {
+  background: rgba(18, 18, 18, 1) !important;
+}
+
+.ios ion-menu.modern-menu ion-content.menu-content {
+  --background: rgba(255, 255, 255, 1) !important;
+}
+
+.ios.dark ion-menu.modern-menu ion-content.menu-content,
+.ios .dark ion-menu.modern-menu ion-content.menu-content {
+  --background: rgba(18, 18, 18, 1) !important;
+}
+
+/* Force menu to be opaque on all platforms */
+ion-menu-controller {
+  --ion-background-color: rgba(255, 255, 255, 1) !important;
+}
+
+.dark ion-menu-controller {
+  --ion-background-color: rgba(18, 18, 18, 1) !important;
+}
+
+/* ==========================================================================
    Responsive Adjustments
    ========================================================================== */
 
@@ -752,7 +825,7 @@ ion-select::part(icon) {
     padding: 1.25rem;
   }
   
-  .modern-menu {
+  ion-menu.modern-menu {
     --width: 260px;
   }
   
