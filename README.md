@@ -111,8 +111,8 @@ The authentication system is built on a modular provider architecture that makes
 
 1. Clone the repository
 ```bash
-git clone https://github.com/iguanai/ionic-vue-boilerplate.git
-cd ionic-vue-boilerplate
+git clone https://github.com/iguanai/app-boilerplate.git
+cd app-boilerplate
 ```
 
 2. Install dependencies
