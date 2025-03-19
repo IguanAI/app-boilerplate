@@ -1,60 +1,134 @@
 # App Boilerplate
 
-A feature-rich, production-ready application boilerplate developed by IguanAI Labs Inc.
+<div align="center">
 
-## Technology Stack
+[![Ionic](https://img.shields.io/badge/Ionic-8.5.0-3880FF?style=for-the-badge&logo=ionic&logoColor=white)](https://ionicframework.com/)
+[![Vue](https://img.shields.io/badge/Vue.js-3.5-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white)](https://vuejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
-- **Frontend Framework**: Vue 3 with Composition API
-- **Build Tool**: Vite
-- **Mobile Framework**: Ionic Framework
-- **State Management**: Pinia
-- **Styling**: Tailwind CSS
-- **TypeScript**: Strong typing throughout
+<p align="center">
+  <b>A feature-rich, production-ready application boilerplate with multi-auth, i18n, and theming</b>
+</p>
 
-## Key Features
+<br/>
 
-### 1. Flexible Authentication System
-- **Multiple Authentication Methods**:
-  - Traditional Email/Password login
-  - Secure Authentication with 2FA support
-  - Easy Login with Email/SMS verification codes
-- Extensible authentication provider architecture
-- Session persistence with localStorage/sessionStorage
-- Complete authentication flows (login, register, password reset)
+<img src="public/favicon.png" alt="App Boilerplate Logo" width="120" height="120">
 
-### 2. Internationalization (i18n)
-- Multi-language support using vue-i18n
-- Default languages: English (en), Spanish (es)
-- Easy to extend with additional languages
-- Language switcher component
+</div>
 
-### 3. Theming
-- Light and Dark mode using Tailwind CSS
-- System preference detection and override
-- Theme persistence with Pinia
-- Customizable color schemes
+## ✨ Features
 
-### 4. Layout System
-- Responsive layouts for all device sizes
-- Proper mobile support with Ionic components
-- Consistent header and navigation
+- 🔒 **Multiple Authentication Methods** - Traditional, 2FA, or Passwordless
+- 🌐 **Internationalization** - Multi-language support (English, Spanish)
+- 🎨 **Theming** - Light/Dark modes with system preference detection
+- 📱 **Responsive** - Works on mobile, tablet, and desktop
+- 📦 **State Management** - Type-safe Pinia stores
+- 📊 **Analytics** - Ready-to-use tracking infrastructure
+- 🚨 **Error Handling** - Centralized logging and user-friendly messages
 
-### 5. State Management
-- Centralized state management with Pinia
-- Type-safe stores
-- Persistent state across sessions
+## 🚀 Tech Stack
 
-### 6. Error Handling and Logging
-- Global error handling
-- Centralized logging service
-- User-friendly error messages
+<table>
+  <tr>
+    <td align="center" width="96">
+      <img src="https://ionicframework.com/img/meta/logo.png" width="48" height="48" alt="Ionic" />
+      <br>Ionic
+    </td>
+    <td align="center" width="96">
+      <img src="https://vuejs.org/images/logo.png" width="48" height="48" alt="Vue" />
+      <br>Vue 3
+    </td>
+    <td align="center" width="96">
+      <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png" width="48" height="48" alt="TypeScript" />
+      <br>TypeScript
+    </td>
+    <td align="center" width="96">
+      <img src="https://pinia.vuejs.org/logo.svg" width="48" height="48" alt="Pinia" />
+      <br>Pinia
+    </td>
+    <td align="center" width="96">
+      <img src="https://tailwindcss.com/_next/static/media/tailwindcss-mark.79614a5f61617ba49a0891494521226b.svg" width="48" height="48" alt="Tailwind" />
+      <br>Tailwind
+    </td>
+    <td align="center" width="96">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Vitejs-logo.svg" width="48" height="48" alt="Vite" />
+      <br>Vite
+    </td>
+  </tr>
+</table>
 
-### 7. Analytics Integration
-- Event tracking infrastructure
-- Screen view tracking
-- User action monitoring
+## 📋 Table of Contents
 
-## Project Structure
+- [Quick Start](#-quick-start)
+- [Authentication System](#-authentication-system)
+- [Project Structure](#-project-structure)
+- [Configuration](#-configuration)
+- [Development Commands](#-development-commands)
+- [Customization](#-customization)
+- [License](#-license)
+
+## 🏁 Quick Start
+
+### Prerequisites
+
+- Node.js (v16+)
+- npm or yarn
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/iguanai/app-boilerplate.git
+cd app-boilerplate
+
+# Install dependencies
+npm install
+# or
+yarn install
+
+# Start the development server
+npm run dev
+# or
+ionic serve
+```
+
+## 🔐 Authentication System
+
+The boilerplate implements a flexible authentication system with three methods:
+
+### 1. Traditional Email/Password
+
+```
+Username/Password + Remember me option
+```
+
+- Standard authentication flow
+- Password reset functionality
+- Secure password storage
+
+### 2. Secure Authentication (with 2FA)
+
+```
+Username/Password + Two-factor verification
+```
+
+- Enhanced security for sensitive applications
+- Support for authenticator apps
+- Backup recovery codes
+
+### 3. Easy Login (Passwordless)
+
+```
+Email/SMS + 6-digit verification code
+```
+
+- Simplified login experience
+- No passwords to remember
+- Support for both email and SMS verification
+
+## 📁 Project Structure
 
 ```
 src/
@@ -76,67 +150,7 @@ src/
 └── config.ts          # App configuration
 ```
 
-## Authentication System
-
-The boilerplate implements a flexible authentication system with three methods:
-
-### 1. Traditional Email/Password
-- Standard username/password login experience
-- Password reset functionality
-- "Remember me" option
-
-### 2. Secure Authentication (with 2FA)
-- Username/password + authenticator code
-- Two-factor authentication support
-- Enhanced security for sensitive applications
-
-### 3. Easy Login
-- Email/SMS verification codes (passwordless)
-- Simple 6-digit verification code
-- Support for both email and SMS verification methods
-
-The authentication system is built on a modular provider architecture that makes it easy to:
-- Add new authentication providers
-- Customize existing providers
-- Switch between different auth methods
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v16+)
-- npm or yarn
-
-### Installation
-
-1. Clone the repository
-```bash
-git clone https://github.com/iguanai/app-boilerplate.git
-cd app-boilerplate
-```
-
-2. Install dependencies
-```bash
-npm install
-# or
-yarn install
-```
-
-3. Start the development server
-```bash
-npm run dev
-# or
-ionic serve
-```
-
-4. Build for production
-```bash
-npm run build
-# or
-ionic build
-```
-
-## Configuration
+## ⚙️ Configuration
 
 The application is highly configurable through the `src/config.ts` file:
 
@@ -146,7 +160,8 @@ const config = {
   app: {
     name: 'Your App Name',
     version: '1.0.0',
-    description: 'Your app description'
+    description: 'Your app description',
+    baseUrl: 'https://yourapp.com',
   },
   auth: {
     sessionDuration: 60, // Session duration in minutes
@@ -157,11 +172,11 @@ const config = {
       easy: { enabled: true, methods: ['email', 'sms'] }
     }
   },
-  // Additional configurations...
+  // See config.ts for full configuration options
 };
 ```
 
-## Environment Variables
+### Environment Variables
 
 Create an `.env` file in the root directory:
 
@@ -176,11 +191,33 @@ VITE_API_URL=https://api.example.com
 VITE_ANALYTICS_ENABLED=true
 ```
 
-## Customization
+## 💻 Development Commands
+
+| Command | Description |
+|---------|-------------|
+| `ionic serve` | Start development server |
+| `ionic build` | Build for production |
+| `npm run dev` | Start Vite dev server |
+| `npm run build` | Build with TypeScript check |
+| `npm run lint` | Run ESLint |
+| `npm run test:unit` | Run unit tests with Vitest |
+| `npm run test:e2e` | Run E2E tests with Cypress |
+
+## 🛠️ Customization
 
 ### Adding New Authentication Providers
 
-1. Create a new provider class implementing the `AuthProvider` interface
+1. Create a new provider class implementing the `AuthProvider` interface:
+
+```typescript
+// src/services/auth/CustomProvider.ts
+import { AuthProvider } from './AuthProvider';
+
+export class CustomProvider implements AuthProvider {
+  // Implement required methods
+}
+```
+
 2. Register the provider in the auth provider registry
 3. Add UI components for the new authentication method
 
@@ -188,20 +225,28 @@ VITE_ANALYTICS_ENABLED=true
 
 1. Create a new JSON file in the `src/locales` directory (e.g., `fr.json`)
 2. Copy the structure from `en.json` and translate the values
-3. Update the language switcher component
+3. Update the language switcher component to include the new language
 
-## Development Commands
+## 📱 Progressive Web App Support
 
-- `ionic serve`: Start development server
-- `ionic build`: Build for production
-- `npm run lint`: Run linting
-- `npm run test:unit`: Run unit tests
-- `npm run test:e2e`: Run end-to-end tests
+This boilerplate includes PWA support out of the box:
 
-## About IguanAI Labs Inc.
+- Installable on mobile and desktop
+- Offline support
+- Native-like experience
+- Automatic updates
 
-IguanAI Labs Inc. specializes in building innovative mobile and web applications with a focus on AI-powered features, robust architecture, and exceptional user experiences.
-
-## License
+## 📝 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+<div align="center">
+  <p>Developed with ❤️ by IguanAI Labs Inc.</p>
+  <p>
+    <a href="https://github.com/iguanai/app-boilerplate/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/iguanai/app-boilerplate/issues">Request Feature</a>
+  </p>
+</div>
