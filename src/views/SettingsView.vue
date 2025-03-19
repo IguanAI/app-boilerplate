@@ -151,20 +151,20 @@ import {
   IonSegmentButton
 } from '@ionic/vue';
 import {
-  personOutline,
+  /* personOutline, */
   notificationsOutline,
   lockClosedOutline,
   logOutOutline,
-  colorPaletteOutline,
-  informationCircleOutline,
+  /* colorPaletteOutline, */
+  /* informationCircleOutline, */
   moonOutline,
   languageOutline,
   chevronForward,
   desktopOutline,
   personCircleOutline,
   moon,
-  sunny,
-  arrowBackOutline
+  sunny
+  /* arrowBackOutline */
 } from 'ionicons/icons';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import { useAuthStore } from '@/stores/authStore';

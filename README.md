@@ -199,7 +199,8 @@ VITE_ANALYTICS_ENABLED=true
 | `ionic build` | Build for production |
 | `npm run dev` | Start Vite dev server |
 | `npm run build` | Build with TypeScript check |
-| `npm run lint` | Run ESLint |
+| `npm run lint` | Run ESLint with auto-fix |
+| `npm run lint:check` | Run ESLint without auto-fix |
 | `npm run test:unit` | Run unit tests with Vitest |
 | `npm run test:e2e` | Run E2E tests with Cypress |
 

@@ -94,6 +94,7 @@ export const initializeLogging = (): void => {
 
 // Function that would send logs to an external service
 // In a real app, this would integrate with Sentry, LogRocket, etc.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const sendToExternalService = (message: string, data?: any, isFatal = false): void => {
   // This is just a stub - in a real app, you'd implement the integration
   // with your logging service

@@ -617,8 +617,8 @@ import {
   IonButton, 
   IonCheckbox,
   IonLoading,
-  IonSelect,
-  IonSelectOption,
+  /* IonSelect, */
+  /* IonSelectOption, */
   IonIcon
 } from '@ionic/vue';
 import {
@@ -634,7 +634,7 @@ import AuthProviderSelector from '@/components/common/AuthProviderSelector.vue';
 import * as authService from '@/services/auth';
 import { useAuthStore } from '@/stores/authStore';
 import { trackScreenView } from '@/services/analytics';
-import config from '@/config';
+/* import config from '@/config'; */
 
 // Router and i18n
 const router = useRouter();

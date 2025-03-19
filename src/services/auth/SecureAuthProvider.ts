@@ -46,7 +46,7 @@ export class SecureAuthProvider implements AuthProvider {
    */
   async login(credentials: { email: string; password: string; totpCode?: string }, options?: LoginOptions): Promise<AuthResult> {
     try {
-      const { email, password, totpCode } = credentials;
+      const { email, /* password, */ totpCode } = credentials;
       const rememberMe = options?.rememberMe || false;
       
       // If we have a TOTP code, handle 2FA verification

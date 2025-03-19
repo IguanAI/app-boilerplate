@@ -30,11 +30,11 @@ import {
   IonPage,
   IonHeader,
   IonToolbar,
-  IonTitle,
+  /* IonTitle, */
   IonContent,
   IonButtons,
   IonMenuButton,
-  IonBackButton,
+  /* IonBackButton, */
   IonButton,
   IonIcon
 } from '@ionic/vue';
@@ -51,7 +51,7 @@ interface Props {
   showMenu?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const _props = withDefaults(defineProps<Props>(), {
   pageTitle: '',
   showMenu: true
 });

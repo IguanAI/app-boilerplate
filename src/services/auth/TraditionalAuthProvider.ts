@@ -35,7 +35,7 @@ export class TraditionalAuthProvider implements AuthProvider {
       // Simulate API call
       await delay(1000);
       
-      const { email, password } = credentials;
+      const { email, /* password */ } = credentials;
       const rememberMe = options?.rememberMe || false;
       
       // Find user in mock database

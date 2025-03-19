@@ -1,5 +1,5 @@
 import { useAuthStore } from '@/stores/authStore';
-import { authProviderRegistry, AuthResult, User, LoginOptions } from './auth/index';
+import { authProviderRegistry, User, LoginOptions } from './auth/index';
 
 /**
  * Get the active auth provider

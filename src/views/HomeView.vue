@@ -55,8 +55,9 @@ import ThemeSwitcher from '@/components/common/ThemeSwitcher.vue';
 import LanguageSwitcher from '@/components/common/LanguageSwitcher.vue';
 import { trackScreenView } from '@/services/analytics';
 import { useThemeStore } from '@/stores/themeStore';
-import logoWhite from '@/assets/images/logo_white.png';
-import logoBlack from '@/assets/images/logo_black.png';
+/* The following imports are not directly used in this component but kept for reference */
+/* import logoWhite from '@/assets/images/logo_white.png';
+import logoBlack from '@/assets/images/logo_black.png'; */
 
 // Router
 const router = useRouter();
