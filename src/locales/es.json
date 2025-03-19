@@ -1,0 +1,86 @@
+{
+  "app": {
+    "title": "Plantilla Ionic Vue",
+    "description": "Una aplicación de plantilla Ionic Vue 3"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "warning": "Advertencia",
+    "info": "Información",
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "confirm": "Confirmar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "search": "Buscar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "language": "Idioma",
+    "theme": "Tema",
+    "version": "Versión"
+  },
+  "theme": {
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Predeterminado del sistema"
+  },
+  "auth": {
+    "signIn": "Iniciar Sesión",
+    "signUp": "Registrarse",
+    "signOut": "Cerrar Sesión",
+    "signOutConfirm": "¿Estás seguro de que quieres cerrar sesión?",
+    "forgotPassword": "Olvidé mi Contraseña",
+    "resetPassword": "Restablecer Contraseña",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "username": "Nombre de Usuario",
+    "name": "Nombre Completo",
+    "rememberMe": "Recordarme",
+    "noAccount": "¿No tienes una cuenta?",
+    "haveAccount": "¿Ya tienes una cuenta?",
+    "passwordReset": "Enlace de restablecimiento de contraseña enviado",
+    "passwordResetInstructions": "Revisa tu correo electrónico para ver las instrucciones de restablecimiento de contraseña",
+    "errors": {
+      "invalidCredentials": "Correo electrónico o contraseña inválidos",
+      "emailRequired": "El correo electrónico es obligatorio",
+      "emailInvalid": "Por favor, introduce un correo electrónico válido",
+      "passwordRequired": "La contraseña es obligatoria",
+      "passwordLength": "La contraseña debe tener al menos 8 caracteres",
+      "passwordMismatch": "Las contraseñas no coinciden"
+    }
+  },
+  "home": {
+    "title": "Inicio",
+    "welcome": "Bienvenido a la Plantilla Ionic Vue",
+    "description": "Una plantilla de inicio con Vue 3, Ionic, Vite, Pinia, Tailwind CSS y más",
+    "getStarted": "Comenzar"
+  },
+  "errors": {
+    "pageNotFound": "Página no encontrada",
+    "pageNotFoundMessage": "La página que estás buscando no existe o ha sido movida.",
+    "returnHome": "Volver al Inicio",
+    "somethingWentWrong": "Algo salió mal",
+    "tryAgain": "Inténtalo de nuevo",
+    "connectionError": "Error de conexión",
+    "serverError": "Error del servidor",
+    "unauthorized": "Acceso no autorizado",
+    "sessionExpired": "Tu sesión ha expirado. Por favor, inicia sesión de nuevo."
+  },
+  "settings": {
+    "title": "Configuración",
+    "account": "Cuenta",
+    "profile": "Perfil",
+    "notifications": "Notificaciones",
+    "language": "Idioma",
+    "theme": "Tema",
+    "privacy": "Privacidad",
+    "security": "Seguridad",
+    "help": "Ayuda y Soporte",
+    "about": "Acerca de"
+  }
+}

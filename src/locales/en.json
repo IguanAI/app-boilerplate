@@ -1,0 +1,110 @@
+{
+  "app": {
+    "title": "Ionic Vue Boilerplate",
+    "description": "A boilerplate Ionic Vue 3 application"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Information",
+    "cancel": "Cancel",
+    "close": "Close",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "language": "Language",
+    "theme": "Theme",
+    "version": "Version"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System default"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "signOutConfirm": "Are you sure you want to sign out?",
+    "forgotPassword": "Forgot Password",
+    "resetPassword": "Reset Password",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "username": "Username",
+    "name": "Full Name",
+    "rememberMe": "Remember Me",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "passwordReset": "Password reset link sent",
+    "passwordResetInstructions": "Check your email for password reset instructions",
+    "loginMethod": "Login Method",
+    "providers": {
+      "traditional": "Email & Password",
+      "secure": "Secure (2FA)",
+      "easy": "Easy Login (Code)"
+    },
+    "phoneNumber": "Phone Number",
+    "verificationCode": "Verification Code",
+    "verificationMethod": "Verification Method",
+    "enableTwoFactor": "Enable Two-Factor Authentication",
+    "enterCode": "Enter Verification Code",
+    "codeExpiration": "Code expires in",
+    "sendCode": "Send Code",
+    "resendCode": "Resend Code",
+    "codeSent": "Code sent to",
+    "verifyAnotherWay": "Verify another way",
+    "verifyWith": "Verify with",
+    "emailVerification": "Email Verification",
+    "smsVerification": "SMS Verification",
+    "errors": {
+      "invalidCredentials": "Invalid email or password",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email",
+      "passwordRequired": "Password is required",
+      "passwordLength": "Password must be at least 8 characters",
+      "passwordMismatch": "Passwords do not match",
+      "invalidVerificationCode": "Invalid verification code",
+      "verificationCodeExpired": "Verification code expired",
+      "phoneRequired": "Phone number is required",
+      "phoneInvalid": "Please enter a valid phone number",
+      "twoFactorRequired": "Two-factor authentication required"
+    }
+  },
+  "home": {
+    "title": "Home",
+    "welcome": "Welcome to Ionic Vue Boilerplate",
+    "description": "A starter template with Vue 3, Ionic, Vite, Pinia, Tailwind CSS, and more",
+    "getStarted": "Get Started"
+  },
+  "errors": {
+    "pageNotFound": "Page not found",
+    "pageNotFoundMessage": "The page you are looking for doesn't exist or has been moved.",
+    "returnHome": "Return to Home",
+    "somethingWentWrong": "Something went wrong",
+    "tryAgain": "Try again",
+    "connectionError": "Connection error",
+    "serverError": "Server error",
+    "unauthorized": "Unauthorized access",
+    "sessionExpired": "Your session has expired. Please sign in again."
+  },
+  "settings": {
+    "title": "Settings",
+    "account": "Account",
+    "profile": "Profile",
+    "notifications": "Notifications",
+    "language": "Language",
+    "theme": "Theme",
+    "privacy": "Privacy",
+    "security": "Security",
+    "help": "Help & Support",
+    "about": "About"
+  }
+}

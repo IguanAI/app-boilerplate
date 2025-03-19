@@ -1,7 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
-
+import { createPinia } from 'pinia';
+import { createI18n } from 'vue-i18n';
 import { IonicVue } from '@ionic/vue';
 
 /* Core CSS required for Ionic components to work properly */
@@ -28,15 +29,46 @@ import '@ionic/vue/css/display.css';
  */
 
 /* @import '@ionic/vue/css/palettes/dark.always.css'; */
-/* @import '@ionic/vue/css/palettes/dark.class.css'; */
-import '@ionic/vue/css/palettes/dark.system.css';
+import '@ionic/vue/css/palettes/dark.class.css';
+/* import '@ionic/vue/css/palettes/dark.system.css'; */
 
 /* Theme variables */
 import './theme/variables.css';
 
+/* Tailwind CSS */
+import './assets/tailwind.css';
+
+/* Import i18n messages */
+import en from '@/locales/en.json';
+import es from '@/locales/es.json';
+
+/* Services */
+import { initializeAnalytics } from '@/services/analytics';
+import { initializeLogging } from '@/services/logging';
+
+/* Create Pinia store */
+const pinia = createPinia();
+
+/* Create i18n instance */
+const i18n = createI18n({
+  legacy: false,
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en,
+    es
+  }
+});
+
+/* Initialize services */
+initializeAnalytics();
+initializeLogging();
+
 const app = createApp(App)
   .use(IonicVue)
-  .use(router);
+  .use(router)
+  .use(pinia)
+  .use(i18n);
 
 router.isReady().then(() => {
   app.mount('#app');
