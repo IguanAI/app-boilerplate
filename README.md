@@ -15,6 +15,7 @@
 <br/>
 
 <img src="public/favicon.png" alt="App Boilerplate Logo" width="120" height="120">
+![image](https://github.com/user-attachments/assets/e1e8d1b8-dd43-4ab9-96aa-8ac578f342ee)
 
 </div>
 
