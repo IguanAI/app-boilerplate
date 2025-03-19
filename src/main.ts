@@ -108,7 +108,9 @@ const customFadeAnimation = (_: HTMLElement, opts: any): Animation => {
 // Configure Ionic with our custom animation
 const ionicConfig = {
   animated: true,
-  navAnimation: customFadeAnimation
+  navAnimation: customFadeAnimation,
+  hardwareBackButton: false,  // Prevent duplicate animations
+  backButtonText: ''
 };
 
 const app = createApp(App)

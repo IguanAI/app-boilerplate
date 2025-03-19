@@ -241,9 +241,15 @@ onBeforeMount(() => {
   display: none;
 }
 
-/* Make sure app has transparent background */
-ion-app, html.dark ion-app, ion-app.dark {
-  --ion-background-color: transparent !important;
+/* Setup base background colors */
+ion-app {
+  --ion-background-color: #f5f9f7 !important;
+  background-color: #f5f9f7;
+}
+
+html.dark ion-app, ion-app.dark {
+  --ion-background-color: #121212 !important;
+  background-color: #121212;
 }
 
 html.dark .dark-mode-background {
@@ -299,6 +305,8 @@ ion-router-outlet > .ion-page {
   overflow: auto;
   display: flex;
   flex-direction: column;
+  contain: layout style;
+  backface-visibility: hidden;
 }
 
 /* Make all toolbar icons and buttons visible in dark mode */

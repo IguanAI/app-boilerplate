@@ -260,6 +260,8 @@ onMounted(() => {
   border-radius: 9999px;
   background-color: rgba(var(--ion-color-primary-rgb), 0.1);
   filter: blur(3rem);
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .bg-blob-2 {
@@ -271,6 +273,8 @@ onMounted(() => {
   border-radius: 9999px;
   background-color: rgba(var(--ion-color-tertiary-rgb), 0.1);
   filter: blur(3rem);
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .bg-blob-3 {
@@ -282,6 +286,8 @@ onMounted(() => {
   border-radius: 9999px;
   background-color: rgba(var(--ion-color-secondary-rgb), 0.1);
   filter: blur(2rem);
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .bg-grid {
@@ -334,8 +340,7 @@ onMounted(() => {
 }
 
 .app-card {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   padding: 1.25rem;
@@ -344,7 +349,7 @@ onMounted(() => {
 }
 
 .dark .app-card {
-  background: rgba(30, 30, 30, 0.75);
+  background: rgba(30, 30, 30, 0.95);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   border-color: rgba(255, 255, 255, 0.05);
 }
