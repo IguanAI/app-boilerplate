@@ -98,11 +98,10 @@ const goBack = () => {
   --color: #10664F !important; /* Green text in light mode */
   opacity: 1;
   position: relative; /* Needed for absolute positioning of logo */
-  min-height: 78px; /* Increased height to avoid camera cutout */
-  --min-height: 78px !important; /* Force minimum height */
-  --padding-top: 16px !important; /* Increased padding to avoid status bar */
+  min-height: 56px; /* Standard height for iOS */
+  --min-height: 56px !important; /* Force minimum height */
+  --padding-top: 8px !important; /* Standard padding for iOS */
   --padding-bottom: 8px !important;
-  margin-top: 10px; /* Additional margin to avoid camera cutout */
 }
 
 /* Make sure dark mode text is visible */
@@ -128,6 +127,19 @@ html.dark .toolbar-container {
   padding-bottom: 12px !important;
   --padding-start: 8px !important;
   --padding-end: 8px !important;
+}
+
+/* iOS specific fixes - reduce padding */
+.ios ion-header {
+  height: auto !important;
+  min-height: 54px !important;
+}
+
+.ios .toolbar-container {
+  --min-height: 54px !important;
+  min-height: 54px !important;
+  --padding-top: 4px !important;
+  --padding-bottom: 4px !important;
 }
 
 /* Move logo down on Android devices */
@@ -238,13 +250,21 @@ html.dark .back-button {
   width: 48px;
   display: flex;
   justify-content: flex-start;
-  padding-top: var(--ion-safe-area-top); /* Add padding for notch */
   position: relative;
   z-index: 10; /* Ensure visibility */
 }
 
+/* Only add top padding on Android */
+.md .equal-width-buttons {
+  padding-top: var(--ion-safe-area-top); /* Add padding for notch */
+}
+
 ion-buttons[slot="end"].equal-width-buttons {
   justify-content: flex-end;
+}
+
+/* Only add top padding on Android */
+.md ion-buttons[slot="end"].equal-width-buttons {
   padding-top: var(--ion-safe-area-top); /* Add padding for notch */
 }
 
@@ -257,13 +277,18 @@ ion-buttons[slot="end"].equal-width-buttons {
 .logo-container {
   position: absolute;
   left: 50%;
-  top: calc(50% + var(--ion-safe-area-top)/2); /* Adjusted for notch */
+  top: 50%; /* Back to standard centering for iOS */
   transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9; /* Increased z-index to prevent being blocked */
   pointer-events: none; /* Allow clicks to pass through */
+}
+
+/* Only adjust logo position on Android */
+.md .logo-container {
+  top: calc(50% + var(--ion-safe-area-top)/2); /* Adjusted for notch */
   margin-top: calc(var(--ion-safe-area-top)/2); /* Additional adjustment */
 }
 
