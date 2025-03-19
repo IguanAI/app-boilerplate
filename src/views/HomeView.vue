@@ -11,13 +11,13 @@
     <!-- Content container -->
     <div class="app-container">
       <!-- Welcome text -->
-      <div class="app-title-section fade-in-slide-up" style="--delay: 0.1s">
+      <div class="app-title-section">
         <h1 class="text-gradient">{{ $t('home.welcome') }}</h1>
         <p>{{ $t('home.description') }}</p>
       </div>
       
       <!-- Action buttons -->
-      <div class="app-button-group fade-in-slide-up" style="--delay: 0.2s">
+      <div class="app-button-group">
         <ion-button @click="router.push('/auth/login')" class="app-button-primary" size="large">
           <ion-icon slot="start" :icon="logInOutline"></ion-icon>
           {{ $t('auth.signIn') }}
@@ -82,40 +82,17 @@ watch(() => themeStore.currentTheme, () => {
   checkDarkMode();
 });
 
-// Function to initialize the view
+// Simplified function to initialize the view - no animations
 const initializeView = () => {
   trackScreenView('Home');
   checkDarkMode();
   
-  // Force the component to be visible and handle animations correctly
+  // Ensure the component is always visible
   nextTick(() => {
     const container = document.querySelector('.app-container');
     if (container) {
       container.classList.add('force-visible');
-      
-      // Initially, have everything visible without animations
-      document.body.classList.remove('animate-enabled');
-      
-      // Only enable animations for fresh page loads, not for navigation back
-      const isInitialLoad = !document.body.classList.contains('app-loaded');
-      if (isInitialLoad) {
-        // Mark as loaded to track subsequent visits
-        document.body.classList.add('app-loaded');
-        
-        // Brief delay, then enable animations
-        setTimeout(() => {
-          document.body.classList.add('animate-enabled');
-        }, 50);
-      }
     }
-    
-    // Apply visibility fixes a second time after a delay
-    setTimeout(() => {
-      const containerDelayed = document.querySelector('.app-container');
-      if (containerDelayed) {
-        containerDelayed.classList.add('force-visible');
-      }
-    }, 100);
   });
 };
 
@@ -136,14 +113,7 @@ onActivated(() => {
   initializeView();
 });
 
-// Set an onbeforeunload handler to help when app is reloaded/restored
-onMounted(() => {
-  window.addEventListener('beforeunload', () => {
-    // Reset the animation state when page is unloaded
-    document.body.classList.remove('app-loaded');
-    document.body.classList.remove('animate-enabled');
-  });
-});
+// No animation state to manage
 </script>
 
 <style scoped>
@@ -360,28 +330,10 @@ onMounted(() => {
   width: 95%;
 }
 
-/* Home page animations - namespace with home- prefix to avoid conflicts */
-.fade-in-slide-up {
+/* No animations - static UI */
+.app-title-section, 
+.app-button-group {
   opacity: 1 !important;
-  /* No animation by default - will be controlled by JavaScript */
-}
-
-/* Only apply animation when specified by a class */
-.animate-enabled .fade-in-slide-up {
-  opacity: 0;
-  animation: home-fadeInUp 0.4s ease-out forwards;
-  animation-delay: var(--delay, 0s);
-}
-
-@keyframes home-fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 /* Responsive adjustments */

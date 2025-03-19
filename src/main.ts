@@ -70,40 +70,28 @@ const i18n = createI18n({
 initializeAnalytics();
 initializeLogging();
 
-// Custom animation function - ultra simplified for reliability
+// Instant "animation" - no actual animation, just immediate transition
 const customFadeAnimation = (_: HTMLElement, opts: any): Animation => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
   
-  // Create animation with minimal duration
+  // Create animation with zero duration
   const animation = createAnimation()
-    .duration(80);
+    .duration(0);
   
-  // Handle the leaving element
+  // Just set classes and z-index for the elements
   if (leavingEl) {
     leavingEl.classList.add('ion-page-leaving');
     leavingEl.style.zIndex = '1';
-    leavingEl.style.opacity = '1';
-    
-    // Remove class very quickly
-    setTimeout(() => {
-      leavingEl.classList.remove('ion-page-leaving');
-    }, 100);
+    leavingEl.style.opacity = '0';
   }
   
-  // Handle the entering element
   if (enteringEl) {
     enteringEl.classList.add('ion-page-entering');
     enteringEl.style.zIndex = '2';
     enteringEl.style.opacity = '1';
-    
-    // Remove class very quickly
-    setTimeout(() => {
-      enteringEl.classList.remove('ion-page-entering');
-    }, 100);
   }
   
-  // Return the animation
   return animation;
 };
 

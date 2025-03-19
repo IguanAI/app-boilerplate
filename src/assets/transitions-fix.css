@@ -32,15 +32,14 @@
   100% { opacity: 0; }
 }
 
-/* Apply to pages - very fast transitions to avoid blank screens */
+/* Apply to pages - instant transitions to avoid any animation issues */
 .ion-page-entering {
-  animation: simpleFadeIn 80ms ease-out forwards;
-  z-index: 2;
   opacity: 1 !important;
+  z-index: 2;
 }
 
 .ion-page-leaving {
-  animation: simpleFadeOut 60ms ease-in forwards;
+  opacity: 0;
   z-index: 1;
 }
 
