@@ -342,7 +342,7 @@ onMounted(() => {
 }
 
 .app-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   padding: 1.25rem;
@@ -351,7 +351,7 @@ onMounted(() => {
 }
 
 .dark .app-card {
-  background: rgba(30, 30, 30, 0.95);
+  background: rgba(30, 30, 30);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   border-color: rgba(255, 255, 255, 0.05);
 }

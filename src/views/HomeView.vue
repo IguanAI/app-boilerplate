@@ -281,7 +281,7 @@ onMounted(() => {
   gap: 1rem;
   padding: 0.75rem;
   border-radius: 9999px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255);
   backdrop-filter: blur(12px);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -290,7 +290,7 @@ onMounted(() => {
 }
 
 .dark .app-floating-controls {
-  background-color: rgba(23, 23, 23, 0.4);
+  background-color: rgba(23, 23, 23);
   border-color: rgba(255, 255, 255, 0.05);
   width: 95%;
 }
