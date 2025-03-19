@@ -286,6 +286,14 @@ onBeforeMount(() => {
   font-weight: 500;
 }
 
+/* Safe area variables for notches/cutouts */
+:root {
+  --ion-safe-area-top: env(safe-area-inset-top, 20px);
+  --ion-safe-area-bottom: env(safe-area-inset-bottom, 0);
+  --ion-safe-area-left: env(safe-area-inset-left, 0);
+  --ion-safe-area-right: env(safe-area-inset-right, 0);
+}
+
 /* Base App Styling */
 .dark-mode-background {
   display: none;

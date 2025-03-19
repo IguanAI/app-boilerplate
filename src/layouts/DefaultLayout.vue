@@ -1,6 +1,6 @@
 <template>
   <ion-page class="default-layout-page">
-    <ion-header class="ion-no-border transparent-header">
+    <ion-header class="ion-no-border transparent-header" mode="ios">
       <ion-toolbar class="toolbar-container">
         <ion-buttons slot="start" class="equal-width-buttons">
           <ion-menu-button v-if="showMenu" class="menu-button"></ion-menu-button>
@@ -87,7 +87,9 @@ const goBack = () => {
 .transparent-header {
   --background: transparent !important;
   opacity: 1;
-  z-index: 100;
+  z-index: 999; /* Increased z-index for Android */
+  contain: none !important; /* Prevent clipping on Android */
+  position: relative; /* Enforce proper positioning */
 }
 
 .toolbar-container {
@@ -96,13 +98,55 @@ const goBack = () => {
   --color: #10664F !important; /* Green text in light mode */
   opacity: 1;
   position: relative; /* Needed for absolute positioning of logo */
-  min-height: 56px; /* Ensure consistent height */
+  min-height: 78px; /* Increased height to avoid camera cutout */
+  --min-height: 78px !important; /* Force minimum height */
+  --padding-top: 16px !important; /* Increased padding to avoid status bar */
+  --padding-bottom: 8px !important;
+  margin-top: 10px; /* Additional margin to avoid camera cutout */
 }
 
 /* Make sure dark mode text is visible */
 .dark .toolbar-container,
 html.dark .toolbar-container {
   --color: #ffffff !important;
+}
+
+/* Android-specific fixes - using safe area insets */
+.md ion-header {
+  margin-top: var(--ion-safe-area-top) !important; /* Use safe area insets */
+  height: auto !important;
+  min-height: 80px !important;
+  padding-top: var(--ion-safe-area-top) !important; 
+  padding-bottom: 12px !important;
+}
+
+.md .toolbar-container {
+  margin-top: var(--ion-safe-area-top) !important; /* Use safe area insets */
+  --min-height: 80px !important;
+  min-height: 80px !important;
+  padding-top: var(--ion-safe-area-top) !important;
+  padding-bottom: 12px !important;
+  --padding-start: 8px !important;
+  --padding-end: 8px !important;
+}
+
+/* Move logo down on Android devices */
+.md .logo-container {
+  top: 60% !important; /* Lower the logo position */
+}
+
+/* Ensure buttons are visible and properly placed */
+.md ion-buttons {
+  z-index: 2;
+  opacity: 1;
+  visibility: visible !important;
+  margin-top: 20px !important; /* Move buttons down */
+}
+
+/* Material Design specific spacers */
+.md .invisible-spacer {
+  width: 40px; /* Slightly larger for Android */
+  height: 40px;
 }
 
 /* Light mode styles */
@@ -194,10 +238,14 @@ html.dark .back-button {
   width: 48px;
   display: flex;
   justify-content: flex-start;
+  padding-top: var(--ion-safe-area-top); /* Add padding for notch */
+  position: relative;
+  z-index: 10; /* Ensure visibility */
 }
 
 ion-buttons[slot="end"].equal-width-buttons {
   justify-content: flex-end;
+  padding-top: var(--ion-safe-area-top); /* Add padding for notch */
 }
 
 .invisible-spacer {
@@ -209,12 +257,14 @@ ion-buttons[slot="end"].equal-width-buttons {
 .logo-container {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: calc(50% + var(--ion-safe-area-top)/2); /* Adjusted for notch */
   transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 0;
+  z-index: 9; /* Increased z-index to prevent being blocked */
+  pointer-events: none; /* Allow clicks to pass through */
+  margin-top: calc(var(--ion-safe-area-top)/2); /* Additional adjustment */
 }
 
 .header-logo {

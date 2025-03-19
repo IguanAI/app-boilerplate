@@ -103,7 +103,8 @@ const ionicConfig = {
   backButtonText: '',
   swipeBackEnabled: false,    // Disable swipe to prevent issues
   initialBreakpoint: 1.0,     // Ensure sheets open completely
-  mode: 'ios'                 // Force iOS mode for consistent experience
+  mode: 'ios',                // Force iOS mode for all platforms
+  statusBarPadding: false     // Disable status bar padding
 };
 
 const app = createApp(App)
