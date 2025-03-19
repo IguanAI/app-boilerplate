@@ -244,7 +244,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 
 ## Screenshots
-<img src="[public/favicon.png](https://github.com/user-attachments/assets/e1e8d1b8-dd43-4ab9-96aa-8ac578f342ee)" alt="App Boilerplate Logo">
+<img src="https://github.com/user-attachments/assets/97812e14-bb01-461f-b738-14ba2a52dee8" alt="App Boilerplate Logo">
+
+
 ---
 
 <div align="center">
