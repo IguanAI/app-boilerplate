@@ -29,11 +29,17 @@ import * as authService from '@/services/auth';
 // Currently selected auth provider
 const selectedProvider = ref(config.auth.defaultProvider);
 
+// Define emits
+const emit = defineEmits(['providerChange']);
+
 // Handler for provider change
 const changeProvider = (event: CustomEvent) => {
   const newProvider = event.detail.value;
   selectedProvider.value = newProvider;
   authService.setActiveProvider(newProvider);
+  
+  // Emit event to notify parent component
+  emit('providerChange', newProvider);
 };
 
 // Initialize on component mount

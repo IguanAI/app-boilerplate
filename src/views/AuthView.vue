@@ -14,10 +14,10 @@
         <!-- Auth card with glassmorphism - enhanced shadows and depth -->
         <div class="app-card auth-card">
           <!-- Auth Provider Selector with updated styling -->
-          <auth-provider-selector class="mb-6" />
+          <auth-provider-selector class="mb-6" @provider-change="handleProviderChange" />
           
           <!-- Traditional Login Form (Email & Password) -->
-          <div v-if="authProvider === 'traditional'" class="space-y-6 fade-in" style="--delay: 0.1s">
+          <div v-if="authProvider === 'traditional'" :key="'traditional-form'" class="space-y-6 fade-in" style="--delay: 0.1s">
             <div v-if="mode === 'login'">
               <h2 class="text-2xl font-bold mb-6 text-center text-dark-900 dark:text-white">{{ $t('auth.signIn') }}</h2>
               
@@ -169,7 +169,7 @@
           </div>
           
           <!-- Secure Auth Provider (with 2FA) -->
-          <div v-else-if="authProvider === 'secure'" class="space-y-6 fade-in" style="--delay: 0.1s">
+          <div v-else-if="authProvider === 'secure'" :key="'secure-form'" class="space-y-6 fade-in" style="--delay: 0.1s">
             <div v-if="mode === 'login'">
               <h2 class="text-2xl font-bold mb-6 text-center text-dark-900 dark:text-white">{{ $t('auth.signIn') }}</h2>
               
@@ -367,7 +367,7 @@
           </div>
           
           <!-- Easy Auth Provider (with verification codes) -->
-          <div v-else-if="authProvider === 'easy'" class="space-y-6 fade-in" style="--delay: 0.1s">
+          <div v-else-if="authProvider === 'easy'" :key="'easy-form'" class="space-y-6 fade-in" style="--delay: 0.1s">
             <div v-if="mode === 'login'">
               <h2 class="text-2xl font-bold mb-6 text-center text-dark-900 dark:text-white">{{ $t('auth.signIn') }}</h2>
               
@@ -644,9 +644,13 @@ const loadingMessage = ref('');
 const mode = ref('login');
 
 // Auth provider
-const authProvider = computed(() => {
-  return authService.getActiveProvider().name;
-});
+const authProvider = ref(authService.getActiveProvider().name);
+
+// Create a custom event handler to listen for provider changes
+const handleProviderChange = () => {
+  // Re-fetch the active provider name
+  authProvider.value = authService.getActiveProvider().name;
+};
 
 // Form data - Common
 const email = ref('');
@@ -1002,11 +1006,17 @@ const handleForgotPassword = async () => {
 };
 
 // Reset form when auth provider changes
-watch(authProvider, () => {
+watch(authProvider, (newProvider, oldProvider) => {
+  console.log(`Provider changed from ${oldProvider} to ${newProvider}`);
   resetForm();
   resetTwoFactor();
   resetVerification();
   mode.value = 'login';
+  
+  // Force UI refresh by toggling a reactive property
+  setTimeout(() => {
+    verificationMethod.value = verificationMethod.value === 'email' ? 'email' : 'email';
+  }, 0);
 });
 
 // Track screen view for analytics
@@ -1018,6 +1028,10 @@ onMounted(() => {
   if (routeMode && ['login', 'register', 'forgot'].includes(routeMode as string)) {
     mode.value = routeMode as string;
   }
+  
+  // Make sure we have the correct provider at the start
+  authProvider.value = authService.getActiveProvider().name;
+  console.log(`Initial auth provider: ${authProvider.value}`);
 });
 </script>
 
