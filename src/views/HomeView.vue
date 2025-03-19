@@ -11,13 +11,13 @@
     <!-- Content container -->
     <div class="app-container">
       <!-- Welcome text -->
-      <div class="app-title-section fade-in-slide-up" style="--delay: 0.4s">
+      <div class="app-title-section fade-in-slide-up" style="--delay: 0.1s">
         <h1 class="text-gradient">{{ $t('home.welcome') }}</h1>
         <p>{{ $t('home.description') }}</p>
       </div>
       
       <!-- Action buttons -->
-      <div class="app-button-group fade-in-slide-up" style="--delay: 0.6s">
+      <div class="app-button-group fade-in-slide-up" style="--delay: 0.2s">
         <ion-button @click="router.push('/auth/login')" class="app-button-primary" size="large">
           <ion-icon slot="start" :icon="logInOutline"></ion-icon>
           {{ $t('auth.signIn') }}
@@ -38,7 +38,7 @@
     </div>
     
     <!-- Floating controls -->
-    <div class="app-floating-controls fade-in" style="--delay: 1s">
+    <div class="app-floating-controls">
       <theme-switcher />
       <language-switcher />
     </div>
@@ -55,7 +55,6 @@ import ThemeSwitcher from '@/components/common/ThemeSwitcher.vue';
 import LanguageSwitcher from '@/components/common/LanguageSwitcher.vue';
 import { trackScreenView } from '@/services/analytics';
 import { useThemeStore } from '@/stores/themeStore';
-import { onIonViewDidEnter, onIonViewWillEnter } from '@ionic/vue';
 /* The following imports are not directly used in this component but kept for reference */
 /* import logoWhite from '@/assets/images/logo_white.png';
 import logoBlack from '@/assets/images/logo_black.png'; */
@@ -88,14 +87,29 @@ const initializeView = () => {
   trackScreenView('Home');
   checkDarkMode();
   
-  // Force the component to be visible - run both immediately and after a small delay
+  // Force the component to be visible and handle animations correctly
   nextTick(() => {
     const container = document.querySelector('.app-container');
     if (container) {
       container.classList.add('force-visible');
+      
+      // Initially, have everything visible without animations
+      document.body.classList.remove('animate-enabled');
+      
+      // Only enable animations for fresh page loads, not for navigation back
+      const isInitialLoad = !document.body.classList.contains('app-loaded');
+      if (isInitialLoad) {
+        // Mark as loaded to track subsequent visits
+        document.body.classList.add('app-loaded');
+        
+        // Brief delay, then enable animations
+        setTimeout(() => {
+          document.body.classList.add('animate-enabled');
+        }, 50);
+      }
     }
     
-    // Apply a second time after a brief delay to handle edge cases
+    // Apply visibility fixes a second time after a delay
     setTimeout(() => {
       const containerDelayed = document.querySelector('.app-container');
       if (containerDelayed) {
@@ -122,13 +136,13 @@ onActivated(() => {
   initializeView();
 });
 
-// Use Ionic lifecycle hooks for additional reliability
-onIonViewWillEnter(() => {
-  initializeView();
-});
-
-onIonViewDidEnter(() => {
-  initializeView();
+// Set an onbeforeunload handler to help when app is reloaded/restored
+onMounted(() => {
+  window.addEventListener('beforeunload', () => {
+    // Reset the animation state when page is unloaded
+    document.body.classList.remove('app-loaded');
+    document.body.classList.remove('animate-enabled');
+  });
 });
 </script>
 
@@ -337,8 +351,7 @@ onIonViewDidEnter(() => {
   backdrop-filter: blur(12px);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  animation: fadeIn 0.5s ease-out forwards;
-  animation-delay: 1s;
+  opacity: 1;
 }
 
 .dark .app-floating-controls {
@@ -347,17 +360,23 @@ onIonViewDidEnter(() => {
   width: 95%;
 }
 
-/* Animations */
+/* Home page animations - namespace with home- prefix to avoid conflicts */
 .fade-in-slide-up {
+  opacity: 1 !important;
+  /* No animation by default - will be controlled by JavaScript */
+}
+
+/* Only apply animation when specified by a class */
+.animate-enabled .fade-in-slide-up {
   opacity: 0;
-  animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: home-fadeInUp 0.4s ease-out forwards;
   animation-delay: var(--delay, 0s);
 }
 
-@keyframes fadeInUp {
+@keyframes home-fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;

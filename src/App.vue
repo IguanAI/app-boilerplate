@@ -120,7 +120,6 @@ import {
   IonToggle,
   menuController
 } from '@ionic/vue';
-import { onIonViewDidEnter, onIonViewWillEnter } from '@ionic/vue';
 import {
   homeOutline,
   settingsOutline,
