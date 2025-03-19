@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page class="default-layout-page">
     <ion-header class="ion-no-border transparent-header">
       <ion-toolbar class="toolbar-container">
         <ion-buttons slot="start">
@@ -75,6 +75,12 @@ const goBack = () => {
 </script>
 
 <style scoped>
+.default-layout-page {
+  opacity: 1 !important;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 .transparent-header {
   --background: transparent !important;
   opacity: 1;

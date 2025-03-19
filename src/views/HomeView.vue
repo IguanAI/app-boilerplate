@@ -99,13 +99,15 @@ onMounted(() => {
 <style scoped>
 /* Updated component styles */
 .app-background {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   overflow: hidden;
   z-index: -10;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .bg-blob-1 {
@@ -115,9 +117,10 @@ onMounted(() => {
   width: 30%;
   height: 30%;
   border-radius: 1.5rem;
-  transform: rotate(12deg);
+  transform: rotate(12deg) translateZ(0);
   background-color: rgba(var(--ion-color-primary-rgb), 0.1);
   filter: blur(2rem);
+  will-change: transform;
 }
 
 .bg-blob-2 {
@@ -129,6 +132,8 @@ onMounted(() => {
   border-radius: 9999px;
   background-color: rgba(var(--ion-color-tertiary-rgb), 0.1);
   filter: blur(3rem);
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .bg-blob-3 {
@@ -140,6 +145,8 @@ onMounted(() => {
   border-radius: 9999px;
   background-color: rgba(var(--ion-color-tertiary-rgb), 0.05);
   filter: blur(3rem);
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .bg-grid {
@@ -159,6 +166,9 @@ onMounted(() => {
   width: 100%;
   min-height: 100vh;
   position: relative;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  opacity: 1 !important;
 }
 
 @media (min-width: 768px) {

@@ -70,35 +70,37 @@ const i18n = createI18n({
 initializeAnalytics();
 initializeLogging();
 
-// Custom animation function - simplified for better performance
+// Custom animation function - ultra simplified for reliability
 const customFadeAnimation = (_: HTMLElement, opts: any): Animation => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
   
-  // Create the animation with extremely simple setup
+  // Create animation with minimal duration
   const animation = createAnimation()
-    .duration(200);
+    .duration(80);
   
   // Handle the leaving element
   if (leavingEl) {
     leavingEl.classList.add('ion-page-leaving');
     leavingEl.style.zIndex = '1';
+    leavingEl.style.opacity = '1';
     
-    // Remove class after animation completes
+    // Remove class very quickly
     setTimeout(() => {
       leavingEl.classList.remove('ion-page-leaving');
-    }, 150);
+    }, 100);
   }
   
   // Handle the entering element
   if (enteringEl) {
     enteringEl.classList.add('ion-page-entering');
     enteringEl.style.zIndex = '2';
+    enteringEl.style.opacity = '1';
     
-    // Remove class after animation completes
+    // Remove class very quickly
     setTimeout(() => {
       enteringEl.classList.remove('ion-page-entering');
-    }, 200);
+    }, 100);
   }
   
   // Return the animation
@@ -110,7 +112,9 @@ const ionicConfig = {
   animated: true,
   navAnimation: customFadeAnimation,
   hardwareBackButton: false,  // Prevent duplicate animations
-  backButtonText: ''
+  backButtonText: '',
+  swipeBackEnabled: false,    // Disable swipe to prevent issues
+  initialBreakpoint: 1.0      // Ensure sheets open completely
 };
 
 const app = createApp(App)
