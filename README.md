@@ -244,9 +244,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 
 ## Screenshots
-<img src="https://github.com/user-attachments/assets/97812e14-bb01-461f-b738-14ba2a52dee8" alt="App Screenshot 1" width="30%" style="margin-right:3%">
-<img src="https://github.com/user-attachments/assets/c39eacaa-f28c-4039-95d1-6f1643a20e7f" alt="App Screenshot 2" width="30%" style="margin-right:3%">
-<img src="https://github.com/user-attachments/assets/60a25bb0-ca1b-4a9e-8992-025b584192a9" alt="App screenshot 3" width="30%" style="margin-right:3%">
+<img src="https://github.com/user-attachments/assets/97812e14-bb01-461f-b738-14ba2a52dee8" alt="App Screenshot 1" width="30%" style="margin-right:3rem">
+<img src="https://github.com/user-attachments/assets/c39eacaa-f28c-4039-95d1-6f1643a20e7f" alt="App Screenshot 2" width="30%" style="margin-right:3rem">
+<img src="https://github.com/user-attachments/assets/60a25bb0-ca1b-4a9e-8992-025b584192a9" alt="App screenshot 3" width="30%" style="margin-right:3rem">
 
 
 
