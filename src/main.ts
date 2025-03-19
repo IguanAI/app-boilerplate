@@ -77,7 +77,7 @@ const customFadeAnimation = (_: HTMLElement, opts: any): Animation => {
   
   // Create the animation
   const animation = createAnimation()
-    .duration(250);
+    .duration(300);
   
   // Handle the leaving element
   if (leavingEl) {
@@ -87,7 +87,7 @@ const customFadeAnimation = (_: HTMLElement, opts: any): Animation => {
     // Remove class after animation completes
     setTimeout(() => {
       leavingEl.classList.remove('ion-page-leaving');
-    }, 200);
+    }, 250);
   }
   
   // Handle the entering element
@@ -98,7 +98,7 @@ const customFadeAnimation = (_: HTMLElement, opts: any): Animation => {
     // Remove class after animation completes
     setTimeout(() => {
       enteringEl.classList.remove('ion-page-entering');
-    }, 250);
+    }, 300);
   }
   
   // Return the animation

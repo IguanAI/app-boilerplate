@@ -541,18 +541,19 @@ ion-select::part(text) {
 
 /* Animation for settings cards */
 .app-card {
-  animation: fadeIn 0.5s ease-out forwards;
+  animation: fadeIn 0.4s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+  will-change: transform, opacity;
 }
 
-.app-card:nth-child(1) { animation-delay: 0.1s; }
-.app-card:nth-child(2) { animation-delay: 0.2s; }
-.app-card:nth-child(3) { animation-delay: 0.3s; }
-.app-card:nth-child(4) { animation-delay: 0.4s; }
+.app-card:nth-child(1) { animation-delay: 0.05s; }
+.app-card:nth-child(2) { animation-delay: 0.1s; }
+.app-card:nth-child(3) { animation-delay: 0.15s; }
+.app-card:nth-child(4) { animation-delay: 0.2s; }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
