@@ -2,7 +2,7 @@
   <ion-page class="default-layout-page">
     <ion-header class="ion-no-border transparent-header">
       <ion-toolbar class="toolbar-container">
-        <ion-buttons slot="start">
+        <ion-buttons slot="start" class="equal-width-buttons">
           <ion-menu-button v-if="showMenu" class="menu-button"></ion-menu-button>
           <ion-button v-else @click="goBack" class="back-button" fill="clear" shape="round">
             <ion-icon :icon="arrowBackOutline" slot="icon-only"></ion-icon>
@@ -11,8 +11,11 @@
         <div class="logo-container">
           <img :src="isDarkMode ? logoWhite : logoBlack" alt="Company Logo" class="header-logo" />
         </div>
-        <ion-buttons slot="end">
-          <slot name="header-buttons"></slot>
+        <ion-buttons slot="end" class="equal-width-buttons">
+          <slot name="header-buttons">
+            <!-- Invisible placeholder to balance the header -->
+            <div class="invisible-spacer"></div>
+          </slot>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -92,6 +95,8 @@ const goBack = () => {
   --border-style: none;
   --color: #10664F !important; /* Green text in light mode */
   opacity: 1;
+  position: relative; /* Needed for absolute positioning of logo */
+  min-height: 56px; /* Ensure consistent height */
 }
 
 /* Make sure dark mode text is visible */
@@ -183,18 +188,40 @@ html.dark .back-button {
   --icon-color: #ffffff;
 }
 
-/* Logo container styling */
+/* Equal width button containers for perfect centering */
+.equal-width-buttons {
+  min-width: 48px;
+  width: 48px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+ion-buttons[slot="end"].equal-width-buttons {
+  justify-content: flex-end;
+}
+
+.invisible-spacer {
+  width: 36px;
+  height: 36px;
+}
+
+/* Logo container styling - perfect centering */
 .logo-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  z-index: 0;
 }
 
 .header-logo {
   height: 32px;
   width: auto;
   object-fit: contain;
+  display: block;
 }
 
 /* For larger screens, add max-width container */
