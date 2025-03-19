@@ -19,3 +19,12 @@
 - **Theme**: Support light/dark/system themes
 - **Error handling**: Use try/catch with appropriate logging
 - **CSS**: Use scoped styles with Tailwind utility classes
+
+## Color Scheme
+- **Primary**: #10664F (deep green)
+- **Secondary**: #10664F (matching green)
+- **Tertiary**: #085E4A (darker green)
+- **Dark Mode Background**: #121212 with green radial gradient (rgba(16, 102, 79, 0.4))
+- **Light Mode Background**: #f5f9f7 with subtle green tint
+- **Navbar**: Transparent with green text (#10664F) in light mode, white text in dark mode
+- **Text Gradients**: Linear gradient from #10664F to #085E4A

@@ -1,473 +1,534 @@
 <template>
   <default-layout :page-title="pageTitle" :show-menu="false">
-    <div class="flex flex-col items-center justify-center min-h-[80vh] p-4">
-      <div class="w-full max-w-md">
-        <!-- Auth Provider Selector -->
-        <auth-provider-selector class="mb-6" />
-        
-        <!-- Traditional Login Form -->
-        <div v-if="authProvider === 'traditional'">
-          <div v-if="mode === 'login'">
-            <h2 class="text-2xl font-bold mb-6 text-center dark:text-white">{{ $t('auth.signIn') }}</h2>
-            
-            <form @submit.prevent="handleTraditionalLogin" class="space-y-4">
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
-                <ion-input
-                  v-model="email"
-                  type="email"
-                  required
-                  autocomplete="email"
-                ></ion-input>
-              </ion-item>
-              
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.password') }}</ion-label>
-                <ion-input
-                  v-model="password"
-                  type="password"
-                  required
-                  autocomplete="current-password"
-                ></ion-input>
-              </ion-item>
-              
-              <ion-item lines="none">
-                <ion-checkbox v-model="rememberMe" slot="start"></ion-checkbox>
-                <ion-label>{{ $t('auth.rememberMe') }}</ion-label>
-              </ion-item>
-              
-              <div class="flex justify-between items-center mt-6">
-                <ion-button type="button" fill="clear" size="small" @click="mode = 'forgot'">
-                  {{ $t('auth.forgotPassword') }}
-                </ion-button>
-                <ion-button type="submit" expand="block">
-                  {{ $t('auth.signIn') }}
-                </ion-button>
-              </div>
-              
-              <div class="text-center mt-6">
-                <p class="text-sm text-gray-600 dark:text-gray-300">
-                  {{ $t('auth.noAccount') }}
-                  <ion-button type="button" fill="clear" size="small" @click="mode = 'register'">
-                    {{ $t('auth.signUp') }}
-                  </ion-button>
-                </p>
-              </div>
-            </form>
-          </div>
+    <div class="flex flex-col items-center justify-center min-h-[80vh] p-6 md:p-8 relative">
+      <!-- Background decoration - enhanced with more elements -->
+      <div class="absolute inset-0 overflow-hidden -z-10 opacity-60">
+        <div class="absolute top-[15%] right-[10%] w-[40%] h-[40%] rounded-full bg-primary-100/30 dark:bg-primary-900/10 blur-3xl"></div>
+        <div class="absolute bottom-[20%] left-[5%] w-[30%] h-[30%] rounded-full bg-tertiary-100/20 dark:bg-tertiary-900/5 blur-3xl"></div>
+        <div class="absolute top-[60%] right-[15%] w-[25%] h-[25%] rounded-full bg-secondary-100/20 dark:bg-secondary-900/10 blur-2xl"></div>
+        <!-- Subtle grid pattern overlay -->
+        <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
+      </div>
+      
+      <div class="w-full max-w-md fade-in-up my-8">
+        <!-- Auth card with glassmorphism - enhanced shadows and depth -->
+        <div class="app-card auth-card">
+          <!-- Auth Provider Selector with updated styling -->
+          <auth-provider-selector class="mb-6" />
           
-          <div v-else-if="mode === 'register'">
-            <h2 class="text-2xl font-bold mb-6 text-center dark:text-white">{{ $t('auth.signUp') }}</h2>
-            
-            <form @submit.prevent="handleTraditionalRegister" class="space-y-4">
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.name') }}</ion-label>
-                <ion-input
-                  v-model="name"
-                  type="text"
-                  required
-                  autocomplete="name"
-                ></ion-input>
-              </ion-item>
+          <!-- Traditional Login Form -->
+          <div v-if="authProvider === 'traditional'" class="space-y-6 fade-in" style="--delay: 0.1s">
+            <div v-if="mode === 'login'">
+              <h2 class="text-2xl font-bold mb-6 text-center text-dark-900 dark:text-white">{{ $t('auth.signIn') }}</h2>
               
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
-                <ion-input
-                  v-model="email"
-                  type="email"
-                  required
-                  autocomplete="email"
-                ></ion-input>
-              </ion-item>
-              
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.password') }}</ion-label>
-                <ion-input
-                  v-model="password"
-                  type="password"
-                  required
-                  autocomplete="new-password"
-                ></ion-input>
-              </ion-item>
-              
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.confirmPassword') }}</ion-label>
-                <ion-input
-                  v-model="confirmPassword"
-                  type="password"
-                  required
-                  autocomplete="new-password"
-                ></ion-input>
-              </ion-item>
-              
-              <div class="flex justify-between items-center mt-6">
-                <ion-button type="button" fill="outline" @click="mode = 'login'">
-                  {{ $t('common.back') }}
-                </ion-button>
-                <ion-button type="submit" expand="block">
-                  {{ $t('auth.signUp') }}
-                </ion-button>
-              </div>
-            </form>
-          </div>
-          
-          <div v-else-if="mode === 'forgot'">
-            <h2 class="text-2xl font-bold mb-6 text-center dark:text-white">{{ $t('auth.resetPassword') }}</h2>
-            
-            <form @submit.prevent="handleForgotPassword" class="space-y-4">
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
-                <ion-input
-                  v-model="email"
-                  type="email"
-                  required
-                  autocomplete="email"
-                ></ion-input>
-              </ion-item>
-              
-              <div class="flex justify-between items-center mt-6">
-                <ion-button type="button" fill="outline" @click="mode = 'login'">
-                  {{ $t('common.back') }}
-                </ion-button>
-                <ion-button type="submit" expand="block">
-                  {{ $t('auth.resetPassword') }}
-                </ion-button>
-              </div>
-            </form>
-          </div>
-        </div>
-        
-        <!-- Secure Auth Provider (with 2FA) -->
-        <div v-else-if="authProvider === 'secure'">
-          <div v-if="mode === 'login'">
-            <h2 class="text-2xl font-bold mb-6 text-center dark:text-white">{{ $t('auth.signIn') }}</h2>
-            
-            <form v-if="!twoFactorRequired" @submit.prevent="handleSecureLogin" class="space-y-4">
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
-                <ion-input
-                  v-model="email"
-                  type="email"
-                  required
-                  autocomplete="email"
-                ></ion-input>
-              </ion-item>
-              
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.password') }}</ion-label>
-                <ion-input
-                  v-model="password"
-                  type="password"
-                  required
-                  autocomplete="current-password"
-                ></ion-input>
-              </ion-item>
-              
-              <ion-item lines="none">
-                <ion-checkbox v-model="rememberMe" slot="start"></ion-checkbox>
-                <ion-label>{{ $t('auth.rememberMe') }}</ion-label>
-              </ion-item>
-              
-              <div class="flex justify-between items-center mt-6">
-                <ion-button type="button" fill="clear" size="small" @click="mode = 'forgot'">
-                  {{ $t('auth.forgotPassword') }}
-                </ion-button>
-                <ion-button type="submit" expand="block">
-                  {{ $t('auth.signIn') }}
-                </ion-button>
-              </div>
-              
-              <div class="text-center mt-6">
-                <p class="text-sm text-gray-600 dark:text-gray-300">
-                  {{ $t('auth.noAccount') }}
-                  <ion-button type="button" fill="clear" size="small" @click="mode = 'register'">
-                    {{ $t('auth.signUp') }}
-                  </ion-button>
-                </p>
-              </div>
-            </form>
-            
-            <!-- 2FA Verification Form -->
-            <form v-else @submit.prevent="handleTwoFactorVerification" class="space-y-4">
-              <div class="text-center mb-4">
-                <p>{{ $t('auth.enterCode') }}</p>
-                <p class="text-sm text-gray-600 dark:text-gray-300">
-                  {{ $t('auth.codeSent') }} {{ twoFactorEmail }}
-                </p>
-              </div>
-              
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.verificationCode') }}</ion-label>
-                <ion-input
-                  v-model="totpCode"
-                  type="text"
-                  maxlength="6"
-                  required
-                  inputmode="numeric"
-                  pattern="[0-9]*"
-                ></ion-input>
-              </ion-item>
-              
-              <div class="flex flex-col gap-2 mt-6">
-                <ion-button type="submit" expand="block">
-                  {{ $t('auth.signIn') }}
-                </ion-button>
+              <form @submit.prevent="handleTraditionalLogin" class="space-y-4">
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
+                    <ion-input
+                      v-model="email"
+                      type="email"
+                      required
+                      autocomplete="email"
+                    ></ion-input>
+                  </ion-item>
+                </div>
                 
-                <ion-button type="button" fill="outline" expand="block" @click="resetTwoFactor">
-                  {{ $t('common.cancel') }}
-                </ion-button>
-              </div>
-            </form>
-          </div>
-          
-          <div v-else-if="mode === 'register'">
-            <h2 class="text-2xl font-bold mb-6 text-center dark:text-white">{{ $t('auth.signUp') }}</h2>
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.password') }}</ion-label>
+                    <ion-input
+                      v-model="password"
+                      type="password"
+                      required
+                      autocomplete="current-password"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <ion-item lines="none" class="app-checkbox">
+                  <ion-checkbox v-model="rememberMe" slot="start"></ion-checkbox>
+                  <ion-label>{{ $t('auth.rememberMe') }}</ion-label>
+                </ion-item>
+                
+                <div class="flex justify-between items-center mt-6">
+                  <ion-button type="button" fill="clear" size="small" class="forgot-btn" @click="mode = 'forgot'">
+                    {{ $t('auth.forgotPassword') }}
+                  </ion-button>
+                  <ion-button type="submit" class="app-button-primary">
+                    {{ $t('auth.signIn') }}
+                  </ion-button>
+                </div>
+                
+                <div class="text-center mt-6">
+                  <p class="text-sm text-gray-600 dark:text-gray-300">
+                    {{ $t('auth.noAccount') }}
+                    <ion-button type="button" fill="clear" size="small" class="signup-btn" @click="mode = 'register'">
+                      {{ $t('auth.signUp') }}
+                    </ion-button>
+                  </p>
+                </div>
+              </form>
+            </div>
             
-            <form @submit.prevent="handleSecureRegister" class="space-y-4">
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.name') }}</ion-label>
-                <ion-input
-                  v-model="name"
-                  type="text"
-                  required
-                  autocomplete="name"
-                ></ion-input>
-              </ion-item>
+            <div v-else-if="mode === 'register'">
+              <h2 class="text-2xl font-bold mb-6 text-center text-dark-900 dark:text-white">{{ $t('auth.signUp') }}</h2>
               
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
-                <ion-input
-                  v-model="email"
-                  type="email"
-                  required
-                  autocomplete="email"
-                ></ion-input>
-              </ion-item>
-              
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.password') }}</ion-label>
-                <ion-input
-                  v-model="password"
-                  type="password"
-                  required
-                  autocomplete="new-password"
-                ></ion-input>
-              </ion-item>
-              
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.confirmPassword') }}</ion-label>
-                <ion-input
-                  v-model="confirmPassword"
-                  type="password"
-                  required
-                  autocomplete="new-password"
-                ></ion-input>
-              </ion-item>
-              
-              <ion-item lines="none">
-                <ion-checkbox v-model="enable2fa" slot="start"></ion-checkbox>
-                <ion-label>{{ $t('auth.enableTwoFactor') }}</ion-label>
-              </ion-item>
-              
-              <div class="flex justify-between items-center mt-6">
-                <ion-button type="button" fill="outline" @click="mode = 'login'">
-                  {{ $t('common.back') }}
-                </ion-button>
-                <ion-button type="submit" expand="block">
-                  {{ $t('auth.signUp') }}
-                </ion-button>
-              </div>
-            </form>
-          </div>
-          
-          <div v-else-if="mode === 'forgot'">
-            <h2 class="text-2xl font-bold mb-6 text-center dark:text-white">{{ $t('auth.resetPassword') }}</h2>
-            
-            <form @submit.prevent="handleForgotPassword" class="space-y-4">
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
-                <ion-input
-                  v-model="email"
-                  type="email"
-                  required
-                  autocomplete="email"
-                ></ion-input>
-              </ion-item>
-              
-              <div class="flex justify-between items-center mt-6">
-                <ion-button type="button" fill="outline" @click="mode = 'login'">
-                  {{ $t('common.back') }}
-                </ion-button>
-                <ion-button type="submit" expand="block">
-                  {{ $t('auth.resetPassword') }}
-                </ion-button>
-              </div>
-            </form>
-          </div>
-        </div>
-        
-        <!-- Easy Auth Provider (with verification codes) -->
-        <div v-else-if="authProvider === 'easy'">
-          <div v-if="mode === 'login'">
-            <h2 class="text-2xl font-bold mb-6 text-center dark:text-white">{{ $t('auth.signIn') }}</h2>
-            
-            <form v-if="!verificationRequired" @submit.prevent="handleEasyLogin" class="space-y-4">
-              <ion-item lines="none">
-                <ion-label>{{ $t('auth.verificationMethod') }}</ion-label>
-                <ion-select
-                  v-model="verificationMethod"
-                  interface="popover"
-                  class="ion-text-end"
-                >
-                  <ion-select-option value="email">{{ $t('auth.emailVerification') }}</ion-select-option>
-                  <ion-select-option value="sms">{{ $t('auth.smsVerification') }}</ion-select-option>
-                </ion-select>
-              </ion-item>
-              
-              <ion-item v-if="verificationMethod === 'email'">
-                <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
-                <ion-input
-                  v-model="email"
-                  type="email"
-                  required
-                  autocomplete="email"
-                ></ion-input>
-              </ion-item>
-              
-              <ion-item v-else>
-                <ion-label position="floating">{{ $t('auth.phoneNumber') }}</ion-label>
-                <ion-input
-                  v-model="phone"
-                  type="tel"
-                  required
-                  autocomplete="tel"
-                ></ion-input>
-              </ion-item>
-              
-              <ion-item lines="none">
-                <ion-checkbox v-model="rememberMe" slot="start"></ion-checkbox>
-                <ion-label>{{ $t('auth.rememberMe') }}</ion-label>
-              </ion-item>
-              
-              <div class="flex justify-between items-center mt-6">
-                <ion-button type="button" fill="clear" size="small" @click="mode = 'forgot'">
-                  {{ $t('auth.forgotPassword') }}
-                </ion-button>
-                <ion-button type="submit" expand="block">
-                  {{ $t('auth.sendCode') }}
-                </ion-button>
-              </div>
-              
-              <div class="text-center mt-6">
-                <p class="text-sm text-gray-600 dark:text-gray-300">
-                  {{ $t('auth.noAccount') }}
-                  <ion-button type="button" fill="clear" size="small" @click="mode = 'register'">
+              <form @submit.prevent="handleTraditionalRegister" class="space-y-4">
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.name') }}</ion-label>
+                    <ion-input
+                      v-model="name"
+                      type="text"
+                      required
+                      autocomplete="name"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
+                    <ion-input
+                      v-model="email"
+                      type="email"
+                      required
+                      autocomplete="email"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.password') }}</ion-label>
+                    <ion-input
+                      v-model="password"
+                      type="password"
+                      required
+                      autocomplete="new-password"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.confirmPassword') }}</ion-label>
+                    <ion-input
+                      v-model="confirmPassword"
+                      type="password"
+                      required
+                      autocomplete="new-password"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <div class="flex justify-between items-center mt-6">
+                  <ion-button type="button" fill="outline" class="back-btn" @click="mode = 'login'">
+                    {{ $t('common.back') }}
+                  </ion-button>
+                  <ion-button type="submit" class="app-button-primary">
                     {{ $t('auth.signUp') }}
                   </ion-button>
-                </p>
-              </div>
-            </form>
+                </div>
+              </form>
+            </div>
             
-            <!-- Verification Code Form -->
-            <form v-else @submit.prevent="handleVerificationCode" class="space-y-4">
-              <div class="text-center mb-4">
-                <p>{{ $t('auth.enterCode') }}</p>
-                <p class="text-sm text-gray-600 dark:text-gray-300">
-                  {{ $t('auth.codeSent') }} {{ verificationIdentifier }}
-                </p>
-              </div>
+            <div v-else-if="mode === 'forgot'">
+              <h2 class="text-2xl font-bold mb-6 text-center text-dark-900 dark:text-white">{{ $t('auth.resetPassword') }}</h2>
               
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.verificationCode') }}</ion-label>
-                <ion-input
-                  v-model="verificationCode"
-                  type="text"
-                  maxlength="6"
-                  required
-                  inputmode="numeric"
-                  pattern="[0-9]*"
-                ></ion-input>
-              </ion-item>
-              
-              <div class="flex flex-col gap-2 mt-6">
-                <ion-button type="submit" expand="block">
-                  {{ $t('auth.signIn') }}
-                </ion-button>
+              <form @submit.prevent="handleForgotPassword" class="space-y-4">
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
+                    <ion-input
+                      v-model="email"
+                      type="email"
+                      required
+                      autocomplete="email"
+                    ></ion-input>
+                  </ion-item>
+                </div>
                 
-                <ion-button type="button" fill="outline" expand="block" @click="resetVerification">
-                  {{ $t('common.cancel') }}
-                </ion-button>
-              </div>
-            </form>
+                <div class="flex justify-between items-center mt-6">
+                  <ion-button type="button" fill="outline" class="back-btn" @click="mode = 'login'">
+                    {{ $t('common.back') }}
+                  </ion-button>
+                  <ion-button type="submit" class="app-button-primary">
+                    {{ $t('auth.resetPassword') }}
+                  </ion-button>
+                </div>
+              </form>
+            </div>
           </div>
           
-          <div v-else-if="mode === 'register'">
-            <h2 class="text-2xl font-bold mb-6 text-center dark:text-white">{{ $t('auth.signUp') }}</h2>
+          <!-- Secure Auth Provider (with 2FA) -->
+          <div v-else-if="authProvider === 'secure'" class="space-y-6 fade-in" style="--delay: 0.1s">
+            <div v-if="mode === 'login'">
+              <h2 class="text-2xl font-bold mb-6 text-center text-dark-900 dark:text-white">{{ $t('auth.signIn') }}</h2>
+              
+              <form v-if="!twoFactorRequired" @submit.prevent="handleSecureLogin" class="space-y-4">
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
+                    <ion-input
+                      v-model="email"
+                      type="email"
+                      required
+                      autocomplete="email"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.password') }}</ion-label>
+                    <ion-input
+                      v-model="password"
+                      type="password"
+                      required
+                      autocomplete="current-password"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <ion-item lines="none" class="app-checkbox">
+                  <ion-checkbox v-model="rememberMe" slot="start"></ion-checkbox>
+                  <ion-label>{{ $t('auth.rememberMe') }}</ion-label>
+                </ion-item>
+                
+                <div class="flex justify-between items-center mt-6">
+                  <ion-button type="button" fill="clear" size="small" class="forgot-btn" @click="mode = 'forgot'">
+                    {{ $t('auth.forgotPassword') }}
+                  </ion-button>
+                  <ion-button type="submit" class="app-button-primary">
+                    {{ $t('auth.signIn') }}
+                  </ion-button>
+                </div>
+                
+                <div class="text-center mt-6">
+                  <p class="text-sm text-gray-600 dark:text-gray-300">
+                    {{ $t('auth.noAccount') }}
+                    <ion-button type="button" fill="clear" size="small" class="signup-btn" @click="mode = 'register'">
+                      {{ $t('auth.signUp') }}
+                    </ion-button>
+                  </p>
+                </div>
+              </form>
+              
+              <!-- 2FA Verification Form -->
+              <form v-else @submit.prevent="handleTwoFactorVerification" class="space-y-4 verification-form">
+                <div class="text-center mb-6 bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4">
+                  <div class="verification-icon mb-4 mx-auto">
+                    <ion-icon :icon="shieldCheckmarkOutline" class="text-4xl text-primary"></ion-icon>
+                  </div>
+                  <h3 class="text-lg font-semibold text-dark-800 dark:text-white mb-2">{{ $t('auth.enterCode') }}</h3>
+                  <p class="text-sm text-gray-600 dark:text-gray-300">
+                    {{ $t('auth.codeSent') }} <span class="text-primary font-medium">{{ twoFactorEmail }}</span>
+                  </p>
+                </div>
+                
+                <div class="form-group">
+                  <ion-item class="app-input app-verification-input">
+                    <ion-label position="floating">{{ $t('auth.verificationCode') }}</ion-label>
+                    <ion-input
+                      v-model="totpCode"
+                      type="text"
+                      maxlength="6"
+                      required
+                      inputmode="numeric"
+                      pattern="[0-9]*"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <div class="flex flex-col gap-3 mt-6">
+                  <ion-button type="submit" class="app-button-primary w-full">
+                    {{ $t('auth.signIn') }}
+                  </ion-button>
+                  
+                  <ion-button type="button" fill="outline" class="back-btn w-full" @click="resetTwoFactor">
+                    {{ $t('common.cancel') }}
+                  </ion-button>
+                </div>
+              </form>
+            </div>
             
-            <form @submit.prevent="handleEasyRegister" class="space-y-4">
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.name') }}</ion-label>
-                <ion-input
-                  v-model="name"
-                  type="text"
-                  required
-                  autocomplete="name"
-                ></ion-input>
-              </ion-item>
+            <div v-else-if="mode === 'register'">
+              <h2 class="text-2xl font-bold mb-6 text-center text-dark-900 dark:text-white">{{ $t('auth.signUp') }}</h2>
               
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
-                <ion-input
-                  v-model="email"
-                  type="email"
-                  required
-                  autocomplete="email"
-                ></ion-input>
-              </ion-item>
+              <form @submit.prevent="handleSecureRegister" class="space-y-4">
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.name') }}</ion-label>
+                    <ion-input
+                      v-model="name"
+                      type="text"
+                      required
+                      autocomplete="name"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
+                    <ion-input
+                      v-model="email"
+                      type="email"
+                      required
+                      autocomplete="email"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.password') }}</ion-label>
+                    <ion-input
+                      v-model="password"
+                      type="password"
+                      required
+                      autocomplete="new-password"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.confirmPassword') }}</ion-label>
+                    <ion-input
+                      v-model="confirmPassword"
+                      type="password"
+                      required
+                      autocomplete="new-password"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <ion-item lines="none" class="app-checkbox app-feature-option">
+                  <ion-checkbox v-model="enable2fa" slot="start"></ion-checkbox>
+                  <ion-label>{{ $t('auth.enableTwoFactor') }}</ion-label>
+                </ion-item>
+                
+                <div class="flex justify-between items-center mt-6">
+                  <ion-button type="button" fill="outline" class="back-btn" @click="mode = 'login'">
+                    {{ $t('common.back') }}
+                  </ion-button>
+                  <ion-button type="submit" class="app-button-primary">
+                    {{ $t('auth.signUp') }}
+                  </ion-button>
+                </div>
+              </form>
+            </div>
+            
+            <div v-else-if="mode === 'forgot'">
+              <h2 class="text-2xl font-bold mb-6 text-center text-dark-900 dark:text-white">{{ $t('auth.resetPassword') }}</h2>
               
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.phoneNumber') }}</ion-label>
-                <ion-input
-                  v-model="phone"
-                  type="tel"
-                  autocomplete="tel"
-                ></ion-input>
-              </ion-item>
-              
-              <div class="flex justify-between items-center mt-6">
-                <ion-button type="button" fill="outline" @click="mode = 'login'">
-                  {{ $t('common.back') }}
-                </ion-button>
-                <ion-button type="submit" expand="block">
-                  {{ $t('auth.signUp') }}
-                </ion-button>
-              </div>
-            </form>
+              <form @submit.prevent="handleForgotPassword" class="space-y-4">
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
+                    <ion-input
+                      v-model="email"
+                      type="email"
+                      required
+                      autocomplete="email"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <div class="flex justify-between items-center mt-6">
+                  <ion-button type="button" fill="outline" class="back-btn" @click="mode = 'login'">
+                    {{ $t('common.back') }}
+                  </ion-button>
+                  <ion-button type="submit" class="app-button-primary">
+                    {{ $t('auth.resetPassword') }}
+                  </ion-button>
+                </div>
+              </form>
+            </div>
           </div>
           
-          <div v-else-if="mode === 'forgot'">
-            <h2 class="text-2xl font-bold mb-6 text-center dark:text-white">{{ $t('auth.resetPassword') }}</h2>
-            
-            <form @submit.prevent="handleForgotPassword" class="space-y-4">
-              <ion-item>
-                <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
-                <ion-input
-                  v-model="email"
-                  type="email"
-                  required
-                  autocomplete="email"
-                ></ion-input>
-              </ion-item>
+          <!-- Easy Auth Provider (with verification codes) -->
+          <div v-else-if="authProvider === 'easy'" class="space-y-6 fade-in" style="--delay: 0.1s">
+            <div v-if="mode === 'login'">
+              <h2 class="text-2xl font-bold mb-6 text-center text-dark-900 dark:text-white">{{ $t('auth.signIn') }}</h2>
               
-              <div class="flex justify-between items-center mt-6">
-                <ion-button type="button" fill="outline" @click="mode = 'login'">
-                  {{ $t('common.back') }}
-                </ion-button>
-                <ion-button type="submit" expand="block">
-                  {{ $t('auth.resetPassword') }}
-                </ion-button>
-              </div>
-            </form>
+              <form v-if="!verificationRequired" @submit.prevent="handleEasyLogin" class="space-y-4">
+                <ion-item lines="none" class="app-select-item">
+                  <ion-label>{{ $t('auth.verificationMethod') }}</ion-label>
+                  <ion-select
+                    v-model="verificationMethod"
+                    interface="popover"
+                    class="app-select"
+                  >
+                    <ion-select-option value="email">{{ $t('auth.emailVerification') }}</ion-select-option>
+                    <ion-select-option value="sms">{{ $t('auth.smsVerification') }}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                
+                <div class="form-group">
+                  <ion-item v-if="verificationMethod === 'email'" class="app-input">
+                    <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
+                    <ion-input
+                      v-model="email"
+                      type="email"
+                      required
+                      autocomplete="email"
+                    ></ion-input>
+                  </ion-item>
+                  
+                  <ion-item v-else class="app-input">
+                    <ion-label position="floating">{{ $t('auth.phoneNumber') }}</ion-label>
+                    <ion-input
+                      v-model="phone"
+                      type="tel"
+                      required
+                      autocomplete="tel"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <ion-item lines="none" class="app-checkbox">
+                  <ion-checkbox v-model="rememberMe" slot="start"></ion-checkbox>
+                  <ion-label>{{ $t('auth.rememberMe') }}</ion-label>
+                </ion-item>
+                
+                <div class="flex justify-between items-center mt-6">
+                  <ion-button type="button" fill="clear" size="small" class="forgot-btn" @click="mode = 'forgot'">
+                    {{ $t('auth.forgotPassword') }}
+                  </ion-button>
+                  <ion-button type="submit" class="app-button-primary">
+                    {{ $t('auth.sendCode') }}
+                  </ion-button>
+                </div>
+                
+                <div class="text-center mt-6">
+                  <p class="text-sm text-gray-600 dark:text-gray-300">
+                    {{ $t('auth.noAccount') }}
+                    <ion-button type="button" fill="clear" size="small" class="signup-btn" @click="mode = 'register'">
+                      {{ $t('auth.signUp') }}
+                    </ion-button>
+                  </p>
+                </div>
+              </form>
+              
+              <!-- Verification Code Form -->
+              <form v-else @submit.prevent="handleVerificationCode" class="space-y-4 verification-form">
+                <div class="text-center mb-6 bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4">
+                  <div class="verification-icon mb-4 mx-auto">
+                    <ion-icon :icon="mailOutline" v-if="verificationMethod === 'email'" class="text-4xl text-primary"></ion-icon>
+                    <ion-icon :icon="phonePortraitOutline" v-else class="text-4xl text-primary"></ion-icon>
+                  </div>
+                  <h3 class="text-lg font-semibold text-dark-800 dark:text-white mb-2">{{ $t('auth.enterCode') }}</h3>
+                  <p class="text-sm text-gray-600 dark:text-gray-300">
+                    {{ $t('auth.codeSent') }} <span class="text-primary font-medium">{{ verificationIdentifier }}</span>
+                  </p>
+                </div>
+                
+                <div class="form-group">
+                  <ion-item class="app-input app-verification-input">
+                    <ion-label position="floating">{{ $t('auth.verificationCode') }}</ion-label>
+                    <ion-input
+                      v-model="verificationCode"
+                      type="text"
+                      maxlength="6"
+                      required
+                      inputmode="numeric"
+                      pattern="[0-9]*"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <div class="flex flex-col gap-3 mt-6">
+                  <ion-button type="submit" class="app-button-primary w-full">
+                    {{ $t('auth.signIn') }}
+                  </ion-button>
+                  
+                  <ion-button type="button" fill="outline" class="back-btn w-full" @click="resetVerification">
+                    {{ $t('common.cancel') }}
+                  </ion-button>
+                </div>
+              </form>
+            </div>
+            
+            <div v-else-if="mode === 'register'">
+              <h2 class="text-2xl font-bold mb-6 text-center text-dark-900 dark:text-white">{{ $t('auth.signUp') }}</h2>
+              
+              <form @submit.prevent="handleEasyRegister" class="space-y-4">
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.name') }}</ion-label>
+                    <ion-input
+                      v-model="name"
+                      type="text"
+                      required
+                      autocomplete="name"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
+                    <ion-input
+                      v-model="email"
+                      type="email"
+                      required
+                      autocomplete="email"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.phoneNumber') }}</ion-label>
+                    <ion-input
+                      v-model="phone"
+                      type="tel"
+                      autocomplete="tel"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <div class="flex justify-between items-center mt-6">
+                  <ion-button type="button" fill="outline" class="back-btn" @click="mode = 'login'">
+                    {{ $t('common.back') }}
+                  </ion-button>
+                  <ion-button type="submit" class="app-button-primary">
+                    {{ $t('auth.signUp') }}
+                  </ion-button>
+                </div>
+              </form>
+            </div>
+            
+            <div v-else-if="mode === 'forgot'">
+              <h2 class="text-2xl font-bold mb-6 text-center text-dark-900 dark:text-white">{{ $t('auth.resetPassword') }}</h2>
+              
+              <form @submit.prevent="handleForgotPassword" class="space-y-4">
+                <div class="form-group">
+                  <ion-item class="app-input">
+                    <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
+                    <ion-input
+                      v-model="email"
+                      type="email"
+                      required
+                      autocomplete="email"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                
+                <div class="flex justify-between items-center mt-6">
+                  <ion-button type="button" fill="outline" class="back-btn" @click="mode = 'login'">
+                    {{ $t('common.back') }}
+                  </ion-button>
+                  <ion-button type="submit" class="app-button-primary">
+                    {{ $t('auth.resetPassword') }}
+                  </ion-button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -510,8 +571,14 @@ import {
   IonCheckbox,
   IonLoading,
   IonSelect,
-  IonSelectOption
+  IonSelectOption,
+  IonIcon
 } from '@ionic/vue';
+import {
+  mailOutline,
+  phonePortraitOutline,
+  shieldCheckmarkOutline
+} from 'ionicons/icons';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import AppAlert from '@/components/ui/AppAlert.vue';
 import AuthProviderSelector from '@/components/common/AuthProviderSelector.vue';
@@ -914,5 +981,25 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Add auth-specific styles here */
+/* Component styles have been moved to /theme/components.css */
+
+/* Additional auth-specific styles */
+.auth-card {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.verification-form {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .auth-card {
+    padding: 1.25rem;
+  }
+}
 </style>

@@ -97,6 +97,7 @@
   },
   "settings": {
     "title": "Settings",
+    "appearance": "Appearance",
     "account": "Account",
     "profile": "Profile",
     "notifications": "Notifications",

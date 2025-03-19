@@ -47,7 +47,11 @@ const routes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes
+  routes,
+  scrollBehavior() {
+    // Simply scroll to top
+    return { top: 0 };
+  }
 });
 
 // Global navigation guard for auth protection

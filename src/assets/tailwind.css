@@ -2,16 +2,116 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    /* Your custom root variables */
-  }
+:root {
+  --app-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --app-transition-fast: 150ms;
+  --app-transition-normal: 300ms;
+  --app-box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-@layer components {
-  /* Your custom component classes */
+body {
+  font-family: var(--app-font-family);
 }
 
-@layer utilities {
-  /* Your custom utility classes */
+/* Light mode background with subtle green tint */
+html, body, ion-app {
+  background-color: #f5f9f7;
+  background-image: radial-gradient(circle at top right, rgba(16, 102, 79, 0.05) 0%, rgba(16, 102, 79, 0) 70%);
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
+}
+
+/* Dark mode needs transparent background to see gradient */
+html.dark, 
+body.dark, 
+html.dark body,
+.dark ion-app {
+  background-color: transparent !important;
+}
+
+/* This is handled by the dark-mode-background div now */
+
+/* Gradient is now handled by the dark-mode-gradient div */
+
+ion-content {
+  --background: transparent;
+}
+
+.dark ion-content {
+  --background: transparent !important; /* Use transparent to show the gradient background */
+}
+
+/* Fix height issues */
+html, body, ion-app, ion-content, ion-page, .ion-page, ion-router-outlet {
+  height: 100%;
+}
+
+/* Dark mode styles */
+
+.app-card {
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  background-color: white;
+  transition: transform var(--app-transition-normal) ease, box-shadow var(--app-transition-normal) ease;
+}
+
+.dark .app-card {
+  background-color: #1f2937;
+}
+
+.app-card:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transform: translateY(-4px);
+}
+
+.gradient-text {
+  color: transparent;
+  background-clip: text;
+  background-image: linear-gradient(to right, #10664F, #085E4A);
+}
+
+.dark .gradient-text {
+  background-image: linear-gradient(to right, #10664F, #085E4A);
+}
+
+.app-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1.5;
+}
+
+.app-button:active {
+  transform: scale(0.95);
+}
+
+/* Button classes moved to components.css */
+
+/* Tertiary button classes moved to components.css */
+
+.text-gradient {
+  color: transparent;
+  background-clip: text;
+  background-image: linear-gradient(to right, #10664F, #085E4A);
+}
+
+.dark .text-gradient {
+  background-image: linear-gradient(to right, #10664F, #085E4A);
+}
+
+.backdrop-blur {
+  backdrop-filter: blur(8px);
+}
+
+.transition-base {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
 }

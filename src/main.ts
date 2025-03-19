@@ -35,8 +35,14 @@ import '@ionic/vue/css/palettes/dark.class.css';
 /* Theme variables */
 import './theme/variables.css';
 
+/* Component styles */
+import './theme/components.css';
+
 /* Tailwind CSS */
 import './assets/tailwind.css';
+
+/* Custom transition fixes */
+import './assets/transitions-fix.css';
 
 /* Import i18n messages */
 import en from '@/locales/en.json';
@@ -64,8 +70,50 @@ const i18n = createI18n({
 initializeAnalytics();
 initializeLogging();
 
+// Custom animation function
+const customFadeAnimation = (_: HTMLElement, opts: any) => {
+  const enteringEl = opts.enteringEl;
+  const leavingEl = opts.leavingEl;
+  
+  // Handle the leaving element
+  if (leavingEl) {
+    leavingEl.classList.add('ion-page-leaving');
+    leavingEl.style.zIndex = '1';
+    
+    // Remove class after animation completes
+    setTimeout(() => {
+      leavingEl.classList.remove('ion-page-leaving');
+    }, 200);
+  }
+  
+  // Handle the entering element
+  if (enteringEl) {
+    enteringEl.classList.add('ion-page-entering');
+    enteringEl.style.zIndex = '2';
+    
+    // Remove class after animation completes
+    setTimeout(() => {
+      enteringEl.classList.remove('ion-page-entering');
+    }, 250);
+  }
+  
+  // Return a promise that resolves after animation completes
+  return {
+    duration: 250, // Duration of animation
+    promise: new Promise(resolve => {
+      setTimeout(resolve, 250);
+    })
+  };
+};
+
+// Configure Ionic with our custom animation
+const ionicConfig = {
+  animated: true,
+  navAnimation: customFadeAnimation
+};
+
 const app = createApp(App)
-  .use(IonicVue)
+  .use(IonicVue, ionicConfig)
   .use(router)
   .use(pinia)
   .use(i18n);

@@ -2,28 +2,28 @@
 
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
-  --ion-color-primary-rgb: 56, 128, 255;
+  --ion-color-primary: #10664F;
+  --ion-color-primary-rgb: 16, 102, 79;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
+  --ion-color-primary-shade: #0e5a46;
+  --ion-color-primary-tint: #29775f;
 
   /** secondary **/
-  --ion-color-secondary: #3dc2ff;
-  --ion-color-secondary-rgb: 61, 194, 255;
+  --ion-color-secondary: #10664F;
+  --ion-color-secondary-rgb: 16, 102, 79;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #36abe0;
-  --ion-color-secondary-tint: #50c8ff;
+  --ion-color-secondary-shade: #0e5a46;
+  --ion-color-secondary-tint: #29775f;
 
   /** tertiary **/
-  --ion-color-tertiary: #5260ff;
-  --ion-color-tertiary-rgb: 82, 96, 255;
+  --ion-color-tertiary: #085E4A;
+  --ion-color-tertiary-rgb: 8, 94, 74;
   --ion-color-tertiary-contrast: #ffffff;
   --ion-color-tertiary-contrast-rgb: 255, 255, 255;
-  --ion-color-tertiary-shade: #4854e0;
-  --ion-color-tertiary-tint: #6370ff;
+  --ion-color-tertiary-shade: #074c3c;
+  --ion-color-tertiary-tint: #23735e;
 
   /** success **/
   --ion-color-success: #2dd36f;
@@ -50,7 +50,7 @@
   --ion-color-danger-tint: #ed576b;
 
   /** dark **/
-  --ion-color-dark: #222428;
+  --ion-color-dark: #1d1d1d;
   --ion-color-dark-rgb: 34, 36, 40;
   --ion-color-dark-contrast: #ffffff;
   --ion-color-dark-contrast-rgb: 255, 255, 255;
@@ -81,26 +81,26 @@
    */
 
   body.dark {
-    --ion-color-primary: #428cff;
-    --ion-color-primary-rgb: 66, 140, 255;
+    --ion-color-primary: #a3a3a3;
+    --ion-color-primary-rgb: 163, 163, 163;
     --ion-color-primary-contrast: #ffffff;
     --ion-color-primary-contrast-rgb: 255, 255, 255;
-    --ion-color-primary-shade: #3a7be0;
-    --ion-color-primary-tint: #5598ff;
+    --ion-color-primary-shade: #8f8f8f;
+    --ion-color-primary-tint: #adadad;
 
-    --ion-color-secondary: #50c8ff;
-    --ion-color-secondary-rgb: 80, 200, 255;
+    --ion-color-secondary: #737373;
+    --ion-color-secondary-rgb: 115, 115, 115;
     --ion-color-secondary-contrast: #ffffff;
     --ion-color-secondary-contrast-rgb: 255, 255, 255;
-    --ion-color-secondary-shade: #46b0e0;
-    --ion-color-secondary-tint: #62ceff;
+    --ion-color-secondary-shade: #656565;
+    --ion-color-secondary-tint: #828282;
 
-    --ion-color-tertiary: #6a64ff;
-    --ion-color-tertiary-rgb: 106, 100, 255;
+    --ion-color-tertiary: #164E38;
+    --ion-color-tertiary-rgb: 22, 78, 56;
     --ion-color-tertiary-contrast: #ffffff;
     --ion-color-tertiary-contrast-rgb: 255, 255, 255;
-    --ion-color-tertiary-shade: #5d58e0;
-    --ion-color-tertiary-tint: #7974ff;
+    --ion-color-tertiary-shade: #134431;
+    --ion-color-tertiary-tint: #2d604c;
 
     --ion-color-success: #2fdf75;
     --ion-color-success-rgb: 47, 223, 117;
@@ -151,7 +151,7 @@
    */
 
   .ios body.dark {
-    --ion-background-color: #000000;
+    --ion-background-color: transparent;
     --ion-background-color-rgb: 0, 0, 0;
 
     --ion-text-color: #ffffff;
@@ -183,8 +183,8 @@
   }
 
   .ios body.dark ion-modal {
-    --ion-background-color: var(--ion-color-step-100);
-    --ion-toolbar-background: var(--ion-color-step-150);
+    --ion-background-color: rgba(18, 18, 18, 0.9);
+    --ion-toolbar-background: transparent;
     --ion-toolbar-border-color: var(--ion-color-step-250);
   }
 
@@ -194,8 +194,8 @@
    */
 
   .md body.dark {
-    --ion-background-color: #121212;
-    --ion-background-color-rgb: 18, 18, 18;
+    --ion-background-color: transparent;
+    --ion-background-color-rgb: 0, 0, 0;
 
     --ion-text-color: #ffffff;
     --ion-text-color-rgb: 255, 255, 255;
@@ -224,7 +224,7 @@
 
     --ion-item-background: #1e1e1e;
 
-    --ion-toolbar-background: #1f1f1f;
+    --ion-toolbar-background: transparent;
 
     --ion-tab-bar-background: #1f1f1f;
 
@@ -234,26 +234,28 @@
 
 /* Class-based dark mode */
 .dark {
-  --ion-color-primary: #428cff;
-  --ion-color-primary-rgb: 66, 140, 255;
+  --ion-background-color: transparent;
+  --ion-background-color-rgb: 0, 0, 0;
+  --ion-color-primary: #10664F;
+  --ion-color-primary-rgb: 16, 102, 79;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3a7be0;
-  --ion-color-primary-tint: #5598ff;
+  --ion-color-primary-shade: #0e5a46;
+  --ion-color-primary-tint: #29775f;
 
-  --ion-color-secondary: #50c8ff;
-  --ion-color-secondary-rgb: 80, 200, 255;
+  --ion-color-secondary: #085E4A;
+  --ion-color-secondary-rgb: 8, 94, 74;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #46b0e0;
-  --ion-color-secondary-tint: #62ceff;
+  --ion-color-secondary-shade: #074c3c;
+  --ion-color-secondary-tint: #23735e;
 
-  --ion-color-tertiary: #6a64ff;
-  --ion-color-tertiary-rgb: 106, 100, 255;
+  --ion-color-tertiary: #10664F;
+  --ion-color-tertiary-rgb: 16, 102, 79;
   --ion-color-tertiary-contrast: #ffffff;
   --ion-color-tertiary-contrast-rgb: 255, 255, 255;
-  --ion-color-tertiary-shade: #5d58e0;
-  --ion-color-tertiary-tint: #7974ff;
+  --ion-color-tertiary-shade: #0e5a46;
+  --ion-color-tertiary-tint: #29775f;
 
   --ion-color-success: #2fdf75;
   --ion-color-success-rgb: 47, 223, 117;
@@ -298,7 +300,7 @@
   --ion-color-light-tint: #383a3e;
 
   /* iOS dark theme */
-  --ion-background-color: #000000;
+  --ion-background-color: transparent;
   --ion-background-color-rgb: 0, 0, 0;
 
   --ion-text-color: #ffffff;
@@ -328,17 +330,17 @@
   --ion-card-background: #1c1c1d;
 
   /* Material Design dark theme */
-  --ion-background-color: #121212;
-  --ion-background-color-rgb: 18, 18, 18;
+  --ion-background-color: transparent;
+  --ion-background-color-rgb: 0, 0, 0;
 
   --ion-border-color: #222222;
 
-  --ion-toolbar-background: #1f1f1f;
+  --ion-toolbar-background: transparent;
   --ion-tab-bar-background: #1f1f1f;
 }
 
 .ios .dark ion-modal {
-  --ion-background-color: var(--ion-color-step-100);
-  --ion-toolbar-background: var(--ion-color-step-150);
+  --ion-background-color: rgba(18, 18, 18, 0.9);
+  --ion-toolbar-background: transparent;
   --ion-toolbar-border-color: var(--ion-color-step-250);
 }

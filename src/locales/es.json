@@ -73,6 +73,7 @@
   },
   "settings": {
     "title": "Configuración",
+    "appearance": "Apariencia",
     "account": "Cuenta",
     "profile": "Perfil",
     "notifications": "Notificaciones",
