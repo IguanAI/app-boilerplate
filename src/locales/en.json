@@ -64,6 +64,13 @@
     "verifyWith": "Verify with",
     "emailVerification": "Email Verification",
     "smsVerification": "SMS Verification",
+    "emailVerificationDesc": "Receive a login code via email",
+    "smsVerificationDesc": "Get a code sent to your phone",
+    "simpleLogin": "Standard email and password authentication",
+    "secureLogin": "Enhanced Security Login",
+    "twoFactorProtection": "Protected with two-factor authentication",
+    "codeLogin": "Passwordless Login",
+    "codeLoginDescription": "Sign in without a password by receiving a one-time verification code.",
     "errors": {
       "invalidCredentials": "Invalid email or password",
       "emailRequired": "Email is required",

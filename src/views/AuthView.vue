@@ -16,12 +16,18 @@
           <!-- Auth Provider Selector with updated styling -->
           <auth-provider-selector class="mb-6" />
           
-          <!-- Traditional Login Form -->
+          <!-- Traditional Login Form (Email & Password) -->
           <div v-if="authProvider === 'traditional'" class="space-y-6 fade-in" style="--delay: 0.1s">
             <div v-if="mode === 'login'">
               <h2 class="text-2xl font-bold mb-6 text-center text-dark-900 dark:text-white">{{ $t('auth.signIn') }}</h2>
               
               <form @submit.prevent="handleTraditionalLogin" class="space-y-4">
+                <div class="rounded-lg bg-primary-50/40 dark:bg-primary-900/10 p-4 mb-4">
+                  <p class="text-sm text-gray-600 dark:text-gray-300">
+                    {{ $t('auth.simpleLogin') }}
+                  </p>
+                </div>
+                
                 <div class="form-group">
                   <ion-item class="app-input">
                     <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
@@ -168,6 +174,16 @@
               <h2 class="text-2xl font-bold mb-6 text-center text-dark-900 dark:text-white">{{ $t('auth.signIn') }}</h2>
               
               <form v-if="!twoFactorRequired" @submit.prevent="handleSecureLogin" class="space-y-4">
+                <div class="flex items-center justify-center mb-6">
+                  <div class="bg-primary-100 dark:bg-primary-900/30 rounded-full p-3 inline-flex">
+                    <ion-icon :icon="shieldCheckmarkOutline" class="text-2xl text-primary"></ion-icon>
+                  </div>
+                  <div class="ml-3">
+                    <h3 class="text-md font-medium text-dark-800 dark:text-white">{{ $t('auth.secureLogin') }}</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ $t('auth.twoFactorProtection') }}</p>
+                  </div>
+                </div>
+                
                 <div class="form-group">
                   <ion-item class="app-input">
                     <ion-label position="floating">{{ $t('auth.email') }}</ion-label>
@@ -356,17 +372,41 @@
               <h2 class="text-2xl font-bold mb-6 text-center text-dark-900 dark:text-white">{{ $t('auth.signIn') }}</h2>
               
               <form v-if="!verificationRequired" @submit.prevent="handleEasyLogin" class="space-y-4">
-                <ion-item lines="none" class="app-select-item">
-                  <ion-label>{{ $t('auth.verificationMethod') }}</ion-label>
-                  <ion-select
-                    v-model="verificationMethod"
-                    interface="popover"
-                    class="app-select"
-                  >
-                    <ion-select-option value="email">{{ $t('auth.emailVerification') }}</ion-select-option>
-                    <ion-select-option value="sms">{{ $t('auth.smsVerification') }}</ion-select-option>
-                  </ion-select>
-                </ion-item>
+                <div class="rounded-lg bg-secondary-50/40 dark:bg-secondary-900/10 p-4 mb-6">
+                  <div class="flex items-center mb-2">
+                    <ion-icon :icon="keyOutline" class="text-xl text-secondary mr-2"></ion-icon>
+                    <h3 class="text-md font-medium text-dark-800 dark:text-white">{{ $t('auth.codeLogin') }}</h3>
+                  </div>
+                  <p class="text-sm text-gray-600 dark:text-gray-300">
+                    {{ $t('auth.codeLoginDescription') }}
+                  </p>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                  <div class="verification-method-card" 
+                      :class="{'active': verificationMethod === 'email'}" 
+                      @click="verificationMethod = 'email'">
+                    <div class="icon-container">
+                      <ion-icon :icon="mailOutline" class="text-2xl"></ion-icon>
+                    </div>
+                    <div class="content">
+                      <h4>{{ $t('auth.emailVerification') }}</h4>
+                      <p>{{ $t('auth.emailVerificationDesc') }}</p>
+                    </div>
+                  </div>
+                  
+                  <div class="verification-method-card" 
+                      :class="{'active': verificationMethod === 'sms'}" 
+                      @click="verificationMethod = 'sms'">
+                    <div class="icon-container">
+                      <ion-icon :icon="phonePortraitOutline" class="text-2xl"></ion-icon>
+                    </div>
+                    <div class="content">
+                      <h4>{{ $t('auth.smsVerification') }}</h4>
+                      <p>{{ $t('auth.smsVerificationDesc') }}</p>
+                    </div>
+                  </div>
+                </div>
                 
                 <div class="form-group">
                   <ion-item v-if="verificationMethod === 'email'" class="app-input">
@@ -577,7 +617,8 @@ import {
 import {
   mailOutline,
   phonePortraitOutline,
-  shieldCheckmarkOutline
+  shieldCheckmarkOutline,
+  keyOutline
 } from 'ionicons/icons';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import AppAlert from '@/components/ui/AppAlert.vue';
@@ -994,6 +1035,71 @@ onMounted(() => {
 
 .form-group {
   margin-bottom: 1rem;
+}
+
+/* Verification method cards */
+.verification-method-card {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+:deep(.dark) .verification-method-card {
+  background: rgba(30, 30, 30, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.verification-method-card.active {
+  background: rgba(16, 102, 79, 0.1);
+  border: 1px solid rgba(16, 102, 79, 0.2);
+}
+
+:deep(.dark) .verification-method-card.active {
+  background: rgba(16, 102, 79, 0.2);
+  border: 1px solid rgba(16, 102, 79, 0.3);
+}
+
+.verification-method-card .icon-container {
+  width: 40px;
+  height: 40px;
+  background: rgba(16, 102, 79, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ion-color-primary);
+  margin-right: 1rem;
+}
+
+.verification-method-card.active .icon-container {
+  background: rgba(16, 102, 79, 0.2);
+}
+
+.verification-method-card .content h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  color: var(--text-primary);
+}
+
+:deep(.dark) .verification-method-card .content h4 {
+  color: var(--text-primary-dark);
+}
+
+.verification-method-card .content p {
+  font-size: 0.75rem;
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+:deep(.dark) .verification-method-card .content p {
+  color: var(--text-secondary-dark);
 }
 
 /* Responsive adjustments */
