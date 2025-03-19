@@ -37,7 +37,7 @@
           <!-- Action buttons with animated entrance -->
           <div class="flex flex-wrap gap-4 mt-8 fade-in-slide-up" style="--delay: 0.6s">
             <ion-button 
-              router-link="/auth/login" 
+              @click="router.push('/auth/login')" 
               class="app-button-primary"
               size="large"
             >
@@ -46,7 +46,7 @@
             </ion-button>
             
             <ion-button 
-              router-link="/settings" 
+              @click="router.push('/settings')" 
               class="app-button-outline"
               size="large"
               fill="outline"
@@ -80,6 +80,7 @@
 <script setup lang="ts">
 import { IonButton, IonIcon } from '@ionic/vue';
 import { onMounted, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 import { logInOutline, settingsOutline } from 'ionicons/icons';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import ThemeSwitcher from '@/components/common/ThemeSwitcher.vue';
@@ -88,6 +89,9 @@ import { trackScreenView } from '@/services/analytics';
 import { useThemeStore } from '@/stores/themeStore';
 import logoWhite from '@/assets/images/logo_white.png';
 import logoBlack from '@/assets/images/logo_black.png';
+
+// Router
+const router = useRouter();
 
 const themeStore = useThemeStore();
 const isDarkTheme = ref(false);

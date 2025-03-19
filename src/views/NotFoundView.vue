@@ -22,7 +22,7 @@
           {{ $t('errors.pageNotFoundMessage') }}
         </p>
         
-        <ion-button router-link="/" class="app-button-primary">
+        <ion-button @click="router.push('/')" class="app-button-primary">
           {{ $t('errors.returnHome') }}
         </ion-button>
       </div>
@@ -33,8 +33,12 @@
 <script setup lang="ts">
 import { IonButton } from '@ionic/vue';
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import { trackScreenView } from '@/services/analytics';
+
+// Router
+const router = useRouter();
 
 // Track screen view for analytics
 onMounted(() => {

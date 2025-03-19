@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router';
 import { createPinia } from 'pinia';
 import { createI18n } from 'vue-i18n';
-import { IonicVue } from '@ionic/vue';
+import { IonicVue, Animation, createAnimation } from '@ionic/vue';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -71,9 +71,13 @@ initializeAnalytics();
 initializeLogging();
 
 // Custom animation function
-const customFadeAnimation = (_: HTMLElement, opts: any) => {
+const customFadeAnimation = (_: HTMLElement, opts: any): Animation => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
+  
+  // Create the animation
+  const animation = createAnimation()
+    .duration(250);
   
   // Handle the leaving element
   if (leavingEl) {
@@ -97,13 +101,8 @@ const customFadeAnimation = (_: HTMLElement, opts: any) => {
     }, 250);
   }
   
-  // Return a promise that resolves after animation completes
-  return {
-    duration: 250, // Duration of animation
-    promise: new Promise(resolve => {
-      setTimeout(resolve, 250);
-    })
-  };
+  // Return the animation
+  return animation;
 };
 
 // Configure Ionic with our custom animation

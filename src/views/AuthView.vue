@@ -130,7 +130,8 @@
                 </div>
                 
                 <div class="flex justify-between items-center mt-6">
-                  <ion-button type="button" fill="outline" class="back-btn" @click="mode = 'login'">
+                  <ion-button type="button" fill="outline" class="back-btn-small" @click="mode = 'login'">
+                    <ion-icon slot="start" :icon="arrowBackOutline" class="text-sm"></ion-icon>
                     {{ $t('common.back') }}
                   </ion-button>
                   <ion-button type="submit" class="app-button-primary">
@@ -157,7 +158,8 @@
                 </div>
                 
                 <div class="flex justify-between items-center mt-6">
-                  <ion-button type="button" fill="outline" class="back-btn" @click="mode = 'login'">
+                  <ion-button type="button" fill="outline" class="back-btn-small" @click="mode = 'login'">
+                    <ion-icon slot="start" :icon="arrowBackOutline" class="text-sm"></ion-icon>
                     {{ $t('common.back') }}
                   </ion-button>
                   <ion-button type="submit" class="app-button-primary">
@@ -250,7 +252,7 @@
                     <ion-input
                       v-model="totpCode"
                       type="text"
-                      maxlength="6"
+                      :maxlength="6"
                       required
                       inputmode="numeric"
                       pattern="[0-9]*"
@@ -263,7 +265,8 @@
                     {{ $t('auth.signIn') }}
                   </ion-button>
                   
-                  <ion-button type="button" fill="outline" class="back-btn w-full" @click="resetTwoFactor">
+                  <ion-button type="button" fill="outline" class="back-btn-small w-full" @click="resetTwoFactor">
+                    <ion-icon slot="start" :icon="arrowBackOutline" class="text-sm"></ion-icon>
                     {{ $t('common.cancel') }}
                   </ion-button>
                 </div>
@@ -328,7 +331,8 @@
                 </ion-item>
                 
                 <div class="flex justify-between items-center mt-6">
-                  <ion-button type="button" fill="outline" class="back-btn" @click="mode = 'login'">
+                  <ion-button type="button" fill="outline" class="back-btn-small" @click="mode = 'login'">
+                    <ion-icon slot="start" :icon="arrowBackOutline" class="text-sm"></ion-icon>
                     {{ $t('common.back') }}
                   </ion-button>
                   <ion-button type="submit" class="app-button-primary">
@@ -355,7 +359,8 @@
                 </div>
                 
                 <div class="flex justify-between items-center mt-6">
-                  <ion-button type="button" fill="outline" class="back-btn" @click="mode = 'login'">
+                  <ion-button type="button" fill="outline" class="back-btn-small" @click="mode = 'login'">
+                    <ion-icon slot="start" :icon="arrowBackOutline" class="text-sm"></ion-icon>
                     {{ $t('common.back') }}
                   </ion-button>
                   <ion-button type="submit" class="app-button-primary">
@@ -473,7 +478,7 @@
                     <ion-input
                       v-model="verificationCode"
                       type="text"
-                      maxlength="6"
+                      :maxlength="6"
                       required
                       inputmode="numeric"
                       pattern="[0-9]*"
@@ -486,7 +491,8 @@
                     {{ $t('auth.signIn') }}
                   </ion-button>
                   
-                  <ion-button type="button" fill="outline" class="back-btn w-full" @click="resetVerification">
+                  <ion-button type="button" fill="outline" class="back-btn-small w-full" @click="resetVerification">
+                    <ion-icon slot="start" :icon="arrowBackOutline" class="text-sm"></ion-icon>
                     {{ $t('common.cancel') }}
                   </ion-button>
                 </div>
@@ -533,7 +539,8 @@
                 </div>
                 
                 <div class="flex justify-between items-center mt-6">
-                  <ion-button type="button" fill="outline" class="back-btn" @click="mode = 'login'">
+                  <ion-button type="button" fill="outline" class="back-btn-small" @click="mode = 'login'">
+                    <ion-icon slot="start" :icon="arrowBackOutline" class="text-sm"></ion-icon>
                     {{ $t('common.back') }}
                   </ion-button>
                   <ion-button type="submit" class="app-button-primary">
@@ -560,7 +567,8 @@
                 </div>
                 
                 <div class="flex justify-between items-center mt-6">
-                  <ion-button type="button" fill="outline" class="back-btn" @click="mode = 'login'">
+                  <ion-button type="button" fill="outline" class="back-btn-small" @click="mode = 'login'">
+                    <ion-icon slot="start" :icon="arrowBackOutline" class="text-sm"></ion-icon>
                     {{ $t('common.back') }}
                   </ion-button>
                   <ion-button type="submit" class="app-button-primary">
@@ -618,7 +626,8 @@ import {
   mailOutline,
   phonePortraitOutline,
   shieldCheckmarkOutline,
-  keyOutline
+  keyOutline,
+  arrowBackOutline
 } from 'ionicons/icons';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import AppAlert from '@/components/ui/AppAlert.vue';

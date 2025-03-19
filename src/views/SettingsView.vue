@@ -1,5 +1,8 @@
 <template>
-  <default-layout :page-title="$t('settings.title')">
+  <default-layout :page-title="$t('settings.title')" :show-menu="false">
+    <template #header-buttons>
+      <!-- Add any additional header buttons here if needed -->
+    </template>
     <div class="flex flex-col min-h-screen relative p-6 md:p-10">
       <!-- Background decoration with blurred elements -->
       <div class="absolute inset-0 overflow-hidden -z-10 opacity-60">
@@ -11,7 +14,7 @@
       </div>
       
       <!-- Settings sections with reduced spacing -->
-      <div class="app-section space-y-24 my-12">
+      <div class="app-section space-y-24 mb-12">
         <!-- Appearance section -->
         <div class="settings-section">
           <!-- No section header, cleaner design -->
@@ -193,7 +196,8 @@ import {
   desktopOutline,
   personCircleOutline,
   moon,
-  sunny
+  sunny,
+  arrowBackOutline
 } from 'ionicons/icons';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import { useAuthStore } from '@/stores/authStore';
@@ -218,7 +222,7 @@ const loadingMessage = ref('');
 const logoutAlert = ref(false);
 
 // Theme handling
-const changeTheme = (event) => {
+const changeTheme = (event: CustomEvent) => {
   const newTheme = event.detail.value as ThemeMode;
   themeStore.setTheme(newTheme);
 };
@@ -231,7 +235,7 @@ const availableLocales = ref([
 
 const currentLocale = computed(() => locale.value);
 
-const changeLanguage = (event) => {
+const changeLanguage = (event: CustomEvent) => {
   const newLocale = event.detail.value;
   locale.value = newLocale;
   localStorage.setItem('locale', newLocale);

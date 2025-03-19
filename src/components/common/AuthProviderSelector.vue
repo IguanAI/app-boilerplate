@@ -26,15 +26,18 @@ import { IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/vue';
 import config from '@/config';
 import * as authService from '@/services/auth';
 
+// Define allowed provider types
+type ProviderType = 'traditional' | 'secure' | 'easy';
+
 // Currently selected auth provider
-const selectedProvider = ref(config.auth.defaultProvider);
+const selectedProvider = ref<ProviderType>(config.auth.defaultProvider as ProviderType);
 
 // Define emits
 const emit = defineEmits(['providerChange']);
 
 // Handler for provider change
 const changeProvider = (event: CustomEvent) => {
-  const newProvider = event.detail.value;
+  const newProvider = event.detail.value as ProviderType;
   selectedProvider.value = newProvider;
   authService.setActiveProvider(newProvider);
   
@@ -45,7 +48,7 @@ const changeProvider = (event: CustomEvent) => {
 // Initialize on component mount
 onMounted(() => {
   // Get current provider from auth service
-  selectedProvider.value = authService.getActiveProvider().name;
+  selectedProvider.value = authService.getActiveProvider().name as ProviderType;
 });
 </script>
 
