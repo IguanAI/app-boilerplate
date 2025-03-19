@@ -97,12 +97,13 @@ const customFadeAnimation = (_: HTMLElement, opts: any): Animation => {
 
 // Configure Ionic with our custom animation
 const ionicConfig = {
-  animated: true,
+  animated: false,            // Disable animations completely
   navAnimation: customFadeAnimation,
   hardwareBackButton: false,  // Prevent duplicate animations
   backButtonText: '',
   swipeBackEnabled: false,    // Disable swipe to prevent issues
-  initialBreakpoint: 1.0      // Ensure sheets open completely
+  initialBreakpoint: 1.0,     // Ensure sheets open completely
+  mode: 'ios'                 // Force iOS mode for consistent experience
 };
 
 const app = createApp(App)

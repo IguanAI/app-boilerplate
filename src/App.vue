@@ -14,42 +14,50 @@
         
         <div class="menu-divider"></div>
         
-        <div class="menu-items">
+        <div class="menu-items" style="visibility: visible !important; opacity: 1 !important;">
+          <!-- Home Menu Item -->
           <div 
             class="menu-item" 
             :class="{ 'active': currentRoute === '/home' }"
             @click="navigateTo('/home')"
+            style="visibility: visible !important; opacity: 1 !important; display: flex !important;"
           >
-            <ion-icon :icon="homeOutline" class="menu-icon"></ion-icon>
-            <span class="menu-label">{{ $t('home.title') }}</span>
+            <ion-icon :icon="homeOutline" class="menu-icon" style="visibility: visible !important; opacity: 1 !important;"></ion-icon>
+            <span class="menu-label" style="visibility: visible !important; opacity: 1 !important;">{{ $t('home.title') }}</span>
           </div>
           
+          <!-- Settings Menu Item -->
           <div 
             class="menu-item" 
             :class="{ 'active': currentRoute === '/settings' }"
             @click="navigateTo('/settings')"
+            style="visibility: visible !important; opacity: 1 !important; display: flex !important;"
           >
-            <ion-icon :icon="settingsOutline" class="menu-icon"></ion-icon>
-            <span class="menu-label">{{ $t('settings.title') }}</span>
+            <ion-icon :icon="settingsOutline" class="menu-icon" style="visibility: visible !important; opacity: 1 !important;"></ion-icon>
+            <span class="menu-label" style="visibility: visible !important; opacity: 1 !important;">{{ $t('settings.title') }}</span>
           </div>
           
+          <!-- Login Menu Item -->
           <div 
             v-if="!authStore.isAuthenticated" 
             class="menu-item" 
             :class="{ 'active': currentRoute.startsWith('/auth') }"
             @click="navigateTo('/auth/login')"
+            style="visibility: visible !important; opacity: 1 !important; display: flex !important;"
           >
-            <ion-icon :icon="logInOutline" class="menu-icon"></ion-icon>
-            <span class="menu-label">{{ $t('auth.signIn') }}</span>
+            <ion-icon :icon="logInOutline" class="menu-icon" style="visibility: visible !important; opacity: 1 !important;"></ion-icon>
+            <span class="menu-label" style="visibility: visible !important; opacity: 1 !important;">{{ $t('auth.signIn') }}</span>
           </div>
           
+          <!-- Logout Menu Item -->
           <div 
             v-else 
             class="menu-item logout-item"
             @click="handleLogout"
+            style="visibility: visible !important; opacity: 1 !important; display: flex !important;"
           >
-            <ion-icon :icon="logOutOutline" class="menu-icon"></ion-icon>
-            <span class="menu-label">{{ $t('auth.signOut') }}</span>
+            <ion-icon :icon="logOutOutline" class="menu-icon" style="visibility: visible !important; opacity: 1 !important;"></ion-icon>
+            <span class="menu-label" style="visibility: visible !important; opacity: 1 !important;">{{ $t('auth.signOut') }}</span>
           </div>
         </div>
         
@@ -243,6 +251,41 @@ onBeforeMount(() => {
 </script>
 
 <style>
+/* iOS menu fixes */
+.menu-content {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.menu-items {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+}
+
+.menu-item {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: flex !important;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.menu-icon {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  color: var(--ion-color-primary);
+}
+
+.menu-label {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
 /* Base App Styling */
 .dark-mode-background {
   display: none;
@@ -331,5 +374,24 @@ html.dark ion-toolbar ion-title {
 /* Ensure proper menu animation - fix for iOS */
 .menu-content-open {
   --backdrop-opacity: 0.5 !important;
+}
+
+/* iOS-specific fixes */
+.ios .menu-items {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+}
+
+.ios .menu-item {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: flex !important;
+}
+
+.ios .menu-icon,
+.ios .menu-label {
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 </style>

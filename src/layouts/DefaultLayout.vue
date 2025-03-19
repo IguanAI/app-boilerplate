@@ -119,7 +119,6 @@ html.dark .menu-button {
 
   --background-hover: rgba(255, 255, 255, 0.2);
   --background-focused: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .content-container {
@@ -141,12 +140,10 @@ html.dark .menu-button {
   width: 36px;
   margin-left: 4px;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .menu-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .back-button {
@@ -168,13 +165,11 @@ html.dark .menu-button {
   width: 36px;
   margin-left: 4px;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
 .back-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 ion-buttons {
@@ -186,7 +181,6 @@ html.dark .back-button {
   --background-hover: rgba(255, 255, 255, 0.2);
   --background-focused: rgba(255, 255, 255, 0.2);
   --icon-color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Logo container styling */
