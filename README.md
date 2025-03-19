@@ -15,7 +15,7 @@
 <br/>
 
 <img src="public/favicon.png" alt="App Boilerplate Logo" width="120" height="120">
-![image](https://github.com/user-attachments/assets/e1e8d1b8-dd43-4ab9-96aa-8ac578f342ee)
+
 
 </div>
 
@@ -242,6 +242,9 @@ This boilerplate includes PWA support out of the box:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+
+## Screenshots
+<img src="[public/favicon.png](https://github.com/user-attachments/assets/e1e8d1b8-dd43-4ab9-96aa-8ac578f342ee)" alt="App Boilerplate Logo">
 ---
 
 <div align="center">
