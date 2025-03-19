@@ -151,6 +151,31 @@
   box-shadow: var(--input-shadow-dark);
 }
 
+/* Custom Select & Switchers */
+ion-item.language-switcher,
+ion-item.language-switcher::part(native),
+ion-item.theme-switcher,
+ion-item.theme-switcher::part(native) {
+  --background: transparent !important;
+  background: transparent !important;
+}
+
+ion-select {
+  --background: transparent !important;
+  background: transparent !important;
+}
+
+/* Override host context for ion-item and ion-select */
+:host(.item) {
+  --background: transparent !important;
+  background: transparent !important;
+}
+
+:host(.select-interface-popover) {
+  --background: transparent !important;
+  background: transparent !important;
+}
+
 /* Verification Input (for 2FA/verification codes) */
 .app-verification-input, .verification-input {
   --background: rgba(16, 102, 79, 0.05);
@@ -413,21 +438,39 @@ ion-select::part(icon) {
 
 /* Theme segment control */
 .theme-segment {
-  --background: rgba(255, 255, 255, 0.7);
-  --background-checked: #10664F;
-  --color: #666;
-  --color-checked: white;
-  --border-radius: 999px;
+  --background: transparent !important;
+  --background-checked: rgba(var(--ion-color-primary-rgb), 0.15) !important;
+  --color: var(--ion-color-primary);
+  --color-checked: var(--ion-color-primary);
+  --border-color: rgba(var(--ion-color-primary-rgb), 0.2);
+  --border-radius: 8px;
+  --border-style: solid;
+  --border-width: 1px;
+  --indicator-color: transparent;
   min-width: 160px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .dark .theme-segment {
-  --background: rgba(26, 26, 26, 0.7);
-  --background-checked: #10664F;
-  --color: #bbb;
+  --background: transparent !important;
+  --background-checked: rgba(255, 255, 255, 0.15) !important;
+  --color: white;
   --color-checked: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Fix for Ionic segment buttons */
+ion-segment-button {
+  --background: transparent !important;
+  --background-checked: transparent !important;
+  --background-hover: rgba(var(--ion-color-primary-rgb), 0.1) !important;
+  --background-activated: rgba(var(--ion-color-primary-rgb), 0.1) !important;
+  --background-focused: rgba(var(--ion-color-primary-rgb), 0.1) !important;
+  --border-color: transparent;
+  --indicator-color: transparent;
+  --padding-top: 6px;
+  --padding-bottom: 6px;
+  --padding-start: 10px;
+  --padding-end: 10px;
 }
 
 /* Background patterns */

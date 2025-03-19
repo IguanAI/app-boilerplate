@@ -1,17 +1,16 @@
 <template>
   <default-layout :page-title="pageTitle" :show-menu="false">
-    <div class="flex flex-col items-center justify-center min-h-[80vh] p-6 md:p-8 relative">
-      <!-- Background decoration - enhanced with more elements -->
-      <div class="absolute inset-0 overflow-hidden -z-10 opacity-60">
-        <div class="absolute top-[15%] right-[10%] w-[40%] h-[40%] rounded-full bg-primary-100/30 dark:bg-primary-900/10 blur-3xl"></div>
-        <div class="absolute bottom-[20%] left-[5%] w-[30%] h-[30%] rounded-full bg-tertiary-100/20 dark:bg-tertiary-900/5 blur-3xl"></div>
-        <div class="absolute top-[60%] right-[15%] w-[25%] h-[25%] rounded-full bg-secondary-100/20 dark:bg-secondary-900/10 blur-2xl"></div>
-        <!-- Subtle grid pattern overlay -->
-        <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      </div>
-      
-      <div class="w-full max-w-md fade-in-up my-8">
-        <!-- Auth card with glassmorphism - enhanced shadows and depth -->
+    <!-- Background decoration -->
+    <div class="app-background">
+      <div class="bg-blob-1"></div>
+      <div class="bg-blob-2"></div>
+      <div class="bg-blob-3"></div>
+      <div class="bg-grid"></div>
+    </div>
+    
+    <div class="auth-container">
+      <div class="auth-card-wrapper">
+        <!-- Auth card -->
         <div class="app-card auth-card">
           <!-- Auth Provider Selector with updated styling -->
           <auth-provider-selector class="mb-6" @provider-change="handleProviderChange" />
@@ -582,28 +581,28 @@
       </div>
     </div>
     
-    <!-- Error alert -->
-    <app-alert
-      v-model:is-open="errorAlert.isOpen"
-      :header="errorAlert.header"
-      :message="errorAlert.message"
-      type="error"
-    />
-    
-    <!-- Success alert -->
-    <app-alert
-      v-model:is-open="successAlert.isOpen"
-      :header="successAlert.header"
-      :message="successAlert.message"
-      type="success"
-    />
-    
-    <!-- Loading overlay -->
-    <ion-loading
-      :is-open="showLoading"
-      :message="loadingMessage"
-      duration="10000"
-    ></ion-loading>
+    <!-- Alerts and overlays -->
+    <div class="app-alerts">
+      <app-alert
+        v-model:is-open="errorAlert.isOpen"
+        :header="errorAlert.header"
+        :message="errorAlert.message"
+        type="error"
+      />
+      
+      <app-alert
+        v-model:is-open="successAlert.isOpen"
+        :header="successAlert.header"
+        :message="successAlert.message"
+        type="success"
+      />
+      
+      <ion-loading
+        :is-open="showLoading"
+        :message="loadingMessage"
+        duration="10000"
+      ></ion-loading>
+    </div>
   </default-layout>
 </template>
 
@@ -1045,9 +1044,84 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Component styles have been moved to /theme/components.css */
+/* Updated component styles */
+.app-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: -10;
+  opacity: 0.6;
+}
 
-/* Additional auth-specific styles */
+.bg-blob-1 {
+  position: absolute;
+  top: 15%;
+  right: 10%;
+  width: 40%;
+  height: 40%;
+  border-radius: 9999px;
+  background-color: rgba(var(--ion-color-primary-rgb), 0.1);
+  filter: blur(3rem);
+}
+
+.bg-blob-2 {
+  position: absolute;
+  bottom: 20%;
+  left: 5%;
+  width: 30%;
+  height: 30%;
+  border-radius: 9999px;
+  background-color: rgba(var(--ion-color-tertiary-rgb), 0.1);
+  filter: blur(3rem);
+}
+
+.bg-blob-3 {
+  position: absolute;
+  top: 60%;
+  right: 15%;
+  width: 25%;
+  height: 25%;
+  border-radius: 9999px;
+  background-color: rgba(var(--ion-color-secondary-rgb), 0.1);
+  filter: blur(2rem);
+}
+
+.bg-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-grid-pattern);
+  opacity: 0.05;
+}
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 1.5rem;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .auth-container {
+    padding: 2rem;
+  }
+}
+
+.auth-card-wrapper {
+  width: 100%;
+  max-width: 28rem;
+  margin: 2rem 0;
+  animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
 .auth-card {
   animation: fadeIn 0.5s ease-out forwards;
 }
@@ -1065,34 +1139,34 @@ onMounted(() => {
   display: flex;
   align-items: center;
   padding: 1rem;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.6);
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.6);
   border: 1px solid rgba(0, 0, 0, 0.05);
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-:deep(.dark) .verification-method-card {
-  background: rgba(30, 30, 30, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+.dark .verification-method-card {
+  background-color: rgba(30, 30, 30, 0.6);
+  border-color: rgba(255, 255, 255, 0.05);
 }
 
 .verification-method-card.active {
-  background: rgba(16, 102, 79, 0.1);
-  border: 1px solid rgba(16, 102, 79, 0.2);
+  background-color: rgba(var(--ion-color-primary-rgb), 0.1);
+  border-color: rgba(var(--ion-color-primary-rgb), 0.2);
 }
 
-:deep(.dark) .verification-method-card.active {
-  background: rgba(16, 102, 79, 0.2);
-  border: 1px solid rgba(16, 102, 79, 0.3);
+.dark .verification-method-card.active {
+  background-color: rgba(var(--ion-color-primary-rgb), 0.2);
+  border-color: rgba(var(--ion-color-primary-rgb), 0.3);
 }
 
 .verification-method-card .icon-container {
-  width: 40px;
-  height: 40px;
-  background: rgba(16, 102, 79, 0.1);
-  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: rgba(var(--ion-color-primary-rgb), 0.1);
+  border-radius: 9999px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1100,29 +1174,58 @@ onMounted(() => {
   margin-right: 1rem;
 }
 
+.dark .verification-method-card .icon-container {
+  background-color: rgba(var(--ion-color-primary-rgb), 0.2);
+}
+
 .verification-method-card.active .icon-container {
-  background: rgba(16, 102, 79, 0.2);
+  background-color: rgba(var(--ion-color-primary-rgb), 0.2);
+}
+
+.dark .verification-method-card.active .icon-container {
+  background-color: rgba(var(--ion-color-primary-rgb), 0.3);
 }
 
 .verification-method-card .content h4 {
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: 600;
   margin: 0 0 0.25rem 0;
-  color: var(--text-primary);
+  color: var(--ion-color-dark);
 }
 
-:deep(.dark) .verification-method-card .content h4 {
-  color: var(--text-primary-dark);
+.dark .verification-method-card .content h4 {
+  color: white;
 }
 
 .verification-method-card .content p {
   font-size: 0.75rem;
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--ion-color-medium);
 }
 
-:deep(.dark) .verification-method-card .content p {
-  color: var(--text-secondary-dark);
+.dark .verification-method-card .content p {
+  color: var(--ion-color-light-shade);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Responsive adjustments */

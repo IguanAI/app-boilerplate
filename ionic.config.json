@@ -1,5 +1,5 @@
 {
-  "name": "ionic-vue-boilerplate",
+  "name": "app-boilerplate",
   "integrations": {
     "capacitor": {}
   },

@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Ionic Vue Boilerplate",
+    "title": "IguanAI's App Boilerplate",
     "description": "A boilerplate Ionic Vue 3 application"
   },
   "common": {
@@ -87,7 +87,7 @@
   },
   "home": {
     "title": "Home",
-    "welcome": "Welcome to Ionic Vue Boilerplate",
+    "welcome": "Welcome to IguanAI's App Boilerplate",
     "description": "A starter template with Vue 3, Ionic, Vite, Pinia, Tailwind CSS, and more",
     "getStarted": "Get Started"
   },

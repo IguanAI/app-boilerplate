@@ -1,76 +1,44 @@
 <template>
   <default-layout :page-title="$t('app.title')">
-    <div class="flex flex-col min-h-screen relative">
-      <!-- Animated background shapes -->
-      <div class="absolute inset-0 overflow-hidden -z-10">
-        <!-- Modern geometric shapes -->
-        <div class="absolute top-[5%] left-[10%] w-[30%] h-[30%] rounded-3xl rotate-12 bg-primary-100/40 dark:bg-primary-900/10 blur-2xl"></div>
-        <div class="absolute top-[15%] right-[15%] w-64 h-64 rounded-full bg-tertiary-100/30 dark:bg-tertiary-900/10 blur-3xl"></div>
-        <div class="absolute bottom-[10%] left-[20%] w-96 h-96 rounded-full bg-tertiary-50/20 dark:bg-tertiary-900/5 blur-3xl"></div>
+    <!-- Background decoration -->
+    <div class="app-background">
+      <div class="bg-blob-1"></div>
+      <div class="bg-blob-2"></div>
+      <div class="bg-blob-3"></div>
+      <div class="bg-grid"></div>
+    </div>
+    
+    <!-- Content container -->
+    <div class="app-container">
+      <!-- Welcome text -->
+      <div class="app-title-section fade-in-slide-up" style="--delay: 0.4s">
+        <h1 class="text-gradient">{{ $t('home.welcome') }}</h1>
+        <p>{{ $t('home.description') }}</p>
       </div>
       
-      <!-- Split layout for desktop -->
-      <div class="flex flex-col md:flex-row h-full w-full">
-        <!-- Left side - content section -->
-        <div class="flex flex-col justify-center w-full md:w-1/2 p-6 md:p-12 space-y-8">
-          <!-- Animated entrance for logo -->
-          <div class="relative fade-in-slide-up">
-              <div class="absolute inset-0 bg-gradient-to-r from-primary-400/20 to-tertiary-400/20 dark:from-primary-500/30 dark:to-tertiary-500/30 rounded-full blur-2xl opacity-40 scale-125"></div>
-              <img 
-                :src="isDarkTheme ? logoWhite : logoBlack" 
-                alt="Logo"
-                class="w-96 h-auto relative z-10"
-              />
-            </div>
-          
-          <!-- Gradient heading with animated entrance -->
-          <div class="fade-in-slide-up" style="--delay: 0.4s">
-            <h1 class="text-5xl lg:text-6xl font-bold tracking-tight text-gradient leading-tight">
-              {{ $t('home.welcome') }}
-            </h1>
-            
-            <p class="text-xl mt-6 text-dark-600 dark:text-dark-300 max-w-xl leading-relaxed">
-              {{ $t('home.description') }}
-            </p>
-          </div>
-          
-          <!-- Action buttons with animated entrance -->
-          <div class="flex flex-wrap gap-4 mt-8 fade-in-slide-up" style="--delay: 0.6s">
-            <ion-button 
-              @click="router.push('/auth/login')" 
-              class="app-button-primary"
-              size="large"
-            >
-              <ion-icon slot="start" :icon="logInOutline"></ion-icon>
-              {{ $t('auth.signIn') }}
-            </ion-button>
-            
-            <ion-button 
-              @click="router.push('/settings')" 
-              class="app-button-outline"
-              size="large"
-              fill="outline"
-            >
-              <ion-icon slot="start" :icon="settingsOutline"></ion-icon>
-              {{ $t('settings.title') }}
-            </ion-button>
-          </div>
-        </div>
+      <!-- Action buttons -->
+      <div class="app-button-group fade-in-slide-up" style="--delay: 0.6s">
+        <ion-button @click="router.push('/auth/login')" class="app-button-primary" size="large">
+          <ion-icon slot="start" :icon="logInOutline"></ion-icon>
+          {{ $t('auth.signIn') }}
+        </ion-button>
         
-        <!-- Right side - visual/graphics section for larger screens -->
-        <div class="hidden md:flex items-center justify-center w-1/2 p-8 relative">
-          <div class="p-4 relative fade-in-slide-up" style="--delay: 0.8s">
-            <!-- Decorative cards with glass effect -->
-            <div class="glassmorphic-card absolute top-10 left-4 w-60 h-28 rounded-xl bg-white/40 dark:bg-gray-900/20 backdrop-blur transform rotate-6"></div>
-            <div class="glassmorphic-card absolute -top-6 right-8 w-44 h-44 rounded-xl bg-white/30 dark:bg-gray-900/20 backdrop-blur transform -rotate-12"></div>
-            <div class="glassmorphic-card absolute bottom-0 right-16 w-52 h-32 rounded-xl bg-white/20 dark:bg-gray-900/10 backdrop-blur transform rotate-3"></div>
-          </div>
-        </div>
+        <ion-button @click="router.push('/settings')" class="app-button-outline" size="large" fill="outline">
+          <ion-icon slot="start" :icon="settingsOutline"></ion-icon>
+          {{ $t('settings.title') }}
+        </ion-button>
+      </div>
+      
+      <!-- Decorative elements (desktop only) -->
+      <div class="app-decorative-cards">
+        <div class="card-1"></div>
+        <div class="card-2"></div>
+        <div class="card-3"></div>
       </div>
     </div>
     
-    <!-- Floating controls with improved styling -->
-    <div class="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex justify-center gap-4 p-3 rounded-full bg-white/80 dark:bg-gray-900/40 backdrop-blur-lg shadow-lg border border-white/20 dark:border-white/5 fade-in" style="--delay: 1s">
+    <!-- Floating controls -->
+    <div class="app-floating-controls fade-in" style="--delay: 1s">
       <theme-switcher />
       <language-switcher />
     </div>
@@ -128,11 +96,224 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Component styles have been moved to /theme/components.css */
+/* Updated component styles */
+.app-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: -10;
+}
+
+.bg-blob-1 {
+  position: absolute;
+  top: 5%;
+  left: 10%;
+  width: 30%;
+  height: 30%;
+  border-radius: 1.5rem;
+  transform: rotate(12deg);
+  background-color: rgba(var(--ion-color-primary-rgb), 0.1);
+  filter: blur(2rem);
+}
+
+.bg-blob-2 {
+  position: absolute;
+  top: 15%;
+  right: 15%;
+  width: 16rem;
+  height: 16rem;
+  border-radius: 9999px;
+  background-color: rgba(var(--ion-color-tertiary-rgb), 0.1);
+  filter: blur(3rem);
+}
+
+.bg-blob-3 {
+  position: absolute;
+  bottom: 10%;
+  left: 20%;
+  width: 24rem;
+  height: 24rem;
+  border-radius: 9999px;
+  background-color: rgba(var(--ion-color-tertiary-rgb), 0.05);
+  filter: blur(3rem);
+}
+
+.bg-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-grid-pattern);
+  opacity: 0.05;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .app-container {
+    flex-direction: row;
+  }
+}
+
+.app-logo {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.app-logo img {
+  width: 24rem;
+  height: auto;
+  position: relative;
+  z-index: 10;
+}
+
+.app-title-section {
+  margin-bottom: 2.5rem;
+}
+
+.app-title-section h1 {
+  font-size: 3rem;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+@media (min-width: 1024px) {
+  .app-title-section h1 {
+    font-size: 3.75rem;
+  }
+}
+
+.app-title-section p {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+  color: var(--ion-color-dark-tint);
+  max-width: 36rem;
+  line-height: 1.6;
+}
+
+.dark .app-title-section p {
+  color: var(--ion-color-dark-shade);
+}
+
+.app-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.app-decorative-cards {
+  display: none;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .app-decorative-cards {
+    display: block;
+  }
+}
+
+.card-1, .card-2, .card-3 {
+  position: absolute;
+  border-radius: 0.75rem;
+  backdrop-filter: blur(8px);
+}
+
+.card-1 {
+  top: 2.5rem;
+  left: 1rem;
+  width: 15rem;
+  height: 7rem;
+  background-color: rgba(255, 255, 255, 0.4);
+  transform: rotate(6deg);
+}
+
+.dark .card-1 {
+  background-color: rgba(23, 23, 23, 0.2);
+}
+
+.card-2 {
+  top: -1.5rem;
+  right: 2rem;
+  width: 11rem;
+  height: 11rem;
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: rotate(-12deg);
+}
+
+.dark .card-2 {
+  background-color: rgba(23, 23, 23, 0.2);
+}
+
+.card-3 {
+  bottom: 0;
+  right: 4rem;
+  width: 13rem;
+  height: 8rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: rotate(3deg);
+}
+
+.dark .card-3 {
+  background-color: rgba(23, 23, 23, 0.1);
+}
+
+.app-floating-controls {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: fadeIn 0.5s ease-out forwards;
+  animation-delay: 1s;
+}
+
+.dark .app-floating-controls {
+  background-color: rgba(23, 23, 23, 0.4);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Animations */
+.fade-in-slide-up {
+  opacity: 0;
+  animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  ion-button {
+  .app-button-group ion-button {
     width: 100%;
     margin-bottom: 1rem;
   }

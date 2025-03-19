@@ -69,9 +69,9 @@ export interface AppConfig {
 // Default configuration
 const config: AppConfig = {
   app: {
-    name: 'Ionic Vue Boilerplate',
+    name: 'App Boilerplate',
     version: '1.0.0',
-    description: 'A boilerplate Ionic Vue 3 application',
+    description: 'A modern application boilerplate',
     baseUrl: 'https://yourapp.com',
   },
   

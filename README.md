@@ -1,6 +1,6 @@
-# Ionic Vue Boilerplate
+# App Boilerplate
 
-A feature-rich, production-ready boilerplate for Ionic Vue 3 applications developed by IguanAI Labs Inc.
+A feature-rich, production-ready application boilerplate developed by IguanAI Labs Inc.
 
 ## Technology Stack
 

@@ -6,6 +6,7 @@
       @ion-change="changeTheme($event)"
       interface="popover"
       class="ion-text-end"
+      mode="ios"
     >
       <ion-select-option value="light">{{ $t('theme.light') }}</ion-select-option>
       <ion-select-option value="dark">{{ $t('theme.dark') }}</ion-select-option>
@@ -40,5 +41,14 @@ onMounted(() => {
   --padding-start: 16px;
   --padding-end: 16px;
   --min-height: 48px;
+  --background: transparent !important;
+}
+
+:host {
+  --background: transparent !important;
+}
+
+ion-select {
+  --background: transparent !important;
 }
 </style>
