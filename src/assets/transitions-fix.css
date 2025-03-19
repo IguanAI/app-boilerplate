@@ -1,0 +1,86 @@
+/* 
+ * Custom fade down/up transitions
+ */
+
+/* Custom fade down/up transitions */
+
+/* Define keyframes for fade-in-up animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Define keyframes for fade-out-down animation */
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* Apply to pages */
+.ion-page {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  contain: layout size style;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Entering page animation */
+.ion-page-entering {
+  animation: fadeInUp 200ms ease-out forwards;
+}
+
+/* Leaving page animation */
+.ion-page-leaving {
+  animation: fadeOutDown 180ms ease-in forwards;
+}
+
+/* Handle invisible pages */
+.ion-page-invisible {
+  opacity: 0;
+}
+
+/* Override default Ionic animations */
+.ion-page-transitioning {
+  pointer-events: none !important;
+}
+
+/* Prevent both pages from showing simultaneously */
+.ion-page-transitioning.ion-page-invisible {
+  display: none !important;
+}
+
+/* Fix for router outlet */
+ion-router-outlet {
+  contain: none;
+}
+
+/* Make sure transitions work properly */
+ion-content {
+  contain: style layout;
+}
+
+/* Set page background to transparent */
+.ion-page {
+  background: transparent !important;
+}

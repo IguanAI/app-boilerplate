@@ -1,0 +1,767 @@
+/* 
+ * Component Styling System
+ * This file contains reusable component styles to be used across the application.
+ * Instead of repeating styles in each component, we define them once here.
+ */
+
+:root {
+  /* Card styling */
+  --card-padding-x: 1.5rem;
+  --card-padding-y: 1.5rem;
+  --card-border-radius: 1rem;
+  --card-background-light: rgba(255, 255, 255, 0.9);
+  --card-background-dark: rgba(26, 26, 26, 0.6);
+  --card-backdrop-blur: 8px;
+  --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  --card-shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.12);
+  --card-margin-bottom: 1.5rem;
+  
+  /* Gradient borders */
+  --border-gradient-light: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(16, 102, 79, 0.2), rgba(255,255,255,0.1));
+  --border-gradient-dark: linear-gradient(135deg, rgba(40,40,40,0.6), rgba(16, 102, 79, 0.3), rgba(30,30,30,0.2));
+  --border-gradient-danger-light: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(220, 38, 38, 0.2), rgba(255,255,255,0.1));
+  --border-gradient-danger-dark: linear-gradient(135deg, rgba(40,40,40,0.6), rgba(220, 38, 38, 0.3), rgba(30,30,30,0.2));
+  --border-width: 5px;
+  
+  /* Form elements */
+  --input-background-light: rgba(255, 255, 255, 0.7);
+  --input-background-hover-light: rgba(255, 255, 255, 0.9);
+  --input-background-dark: rgba(26, 26, 26, 0.7);
+  --input-background-hover-dark: rgba(35, 35, 35, 0.9);
+  --input-border-color-light: rgba(0, 0, 0, 0.08);
+  --input-border-color-dark: rgba(255, 255, 255, 0.08);
+  --input-highlight-color: #10664F;
+  --input-border-radius: 12px;
+  --input-shadow-light: 0 4px 10px rgba(0, 0, 0, 0.03);
+  --input-shadow-dark: 0 4px 10px rgba(0, 0, 0, 0.15);
+  --input-padding: 1rem;
+  
+  /* Spacing */
+  --content-spacing: 2rem;
+  --section-spacing: 2rem;
+  
+  /* Text */
+  --text-primary: #10664F;
+  --text-primary-dark: #ffffff;
+  --text-secondary: rgba(0, 0, 0, 0.7);
+  --text-secondary-dark: rgba(255, 255, 255, 0.7);
+  --font-size-normal: 1rem;
+  --font-size-large: 1.125rem;
+  
+  /* Animations */
+  --transition-speed: 0.3s;
+  --hover-lift: translateY(-3px);
+  --animation-timing: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ==========================================================================
+   Card Components
+   ========================================================================== */
+
+/* Base Card */
+.app-card {
+  position: relative;
+  background: var(--card-background-light);
+  backdrop-filter: blur(var(--card-backdrop-blur));
+  padding: var(--card-padding-y) var(--card-padding-x);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--card-shadow);
+  margin-bottom: var(--card-margin-bottom);
+  transition: transform var(--transition-speed) ease, 
+              box-shadow var(--transition-speed) ease;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.dark .app-card {
+  background: var(--card-background-dark);
+}
+
+.app-card:hover {
+  transform: var(--hover-lift);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* Gradient Border Effect */
+.app-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--card-border-radius);
+  padding: var(--border-width);
+  background: var(--border-gradient-light);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.dark .app-card::before {
+  background: var(--border-gradient-dark);
+}
+
+/* Danger Card (for logout, etc.) */
+.app-card-danger::before {
+  background: var(--border-gradient-danger-light) !important;
+}
+
+.dark .app-card-danger::before {
+  background: var(--border-gradient-danger-dark) !important;
+}
+
+/* Glassmorphic cards (decorative elements) */
+.glassmorphic-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.dark .glassmorphic-card {
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   Form Components
+   ========================================================================== */
+
+/* Custom Input */
+.app-input, .custom-input {
+  --background: var(--input-background-light);
+  --background-hover: var(--input-background-hover-light);
+  --border-radius: var(--input-border-radius);
+  --highlight-color-focused: var(--input-highlight-color);
+  margin-bottom: 1rem;
+  border-radius: var(--input-border-radius);
+  --border-width: 1px;
+  --border-color: var(--input-border-color-light);
+  --padding-start: var(--input-padding);
+  --padding-end: var(--input-padding);
+  --padding-top: 0.5rem;
+  box-shadow: var(--input-shadow-light);
+}
+
+.dark .app-input, .dark .custom-input {
+  --background: var(--input-background-dark);
+  --background-hover: var(--input-background-hover-dark);
+  --border-color: var(--input-border-color-dark);
+  box-shadow: var(--input-shadow-dark);
+}
+
+/* Verification Input (for 2FA/verification codes) */
+.app-verification-input, .verification-input {
+  --background: rgba(16, 102, 79, 0.05);
+}
+
+.dark .app-verification-input, .dark .verification-input {
+  --background: rgba(16, 102, 79, 0.1);
+}
+
+/* Custom Checkbox */
+.app-checkbox, .custom-checkbox {
+  --background: transparent;
+  --border-color: transparent;
+}
+
+/* Feature Option Highlight */
+.app-feature-option, .feature-option {
+  --background: rgba(16, 102, 79, 0.05);
+  border-radius: 10px;
+}
+
+.dark .app-feature-option, .dark .feature-option {
+  --background: rgba(16, 102, 79, 0.1);
+}
+
+/* Custom Select Item */
+.app-select-item, .custom-select-item {
+  --background: rgba(255, 255, 255, 0.5);
+  --border-radius: 10px;
+  margin-bottom: 0.5rem;
+  border-radius: 10px;
+}
+
+.dark .app-select-item, .dark .custom-select-item {
+  --background: rgba(26, 26, 26, 0.5);
+}
+
+/* Custom Select */
+.app-select, .custom-select {
+  --placeholder-color: #666;
+  --placeholder-opacity: 0.8;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.dark .app-select, .dark .custom-select {
+  color: white;
+}
+
+ion-select::part(icon) {
+  color: var(--text-primary);
+}
+
+.dark ion-select::part(icon) {
+  color: white;
+}
+
+/* Verification Form Icon */
+.verification-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgba(16, 102, 79, 0.1);
+  margin-bottom: 1.5rem;
+  margin: 0 auto;
+  box-shadow: 0 10px 25px rgba(16, 102, 79, 0.15);
+  border: 2px solid rgba(16, 102, 79, 0.15);
+  transition: all 0.3s ease;
+}
+
+.dark .verification-icon {
+  background-color: rgba(16, 102, 79, 0.2);
+  box-shadow: 0 10px 25px rgba(16, 102, 79, 0.25);
+}
+
+.verification-form:hover .verification-icon {
+  transform: scale(1.05);
+  box-shadow: 0 15px 30px rgba(16, 102, 79, 0.2);
+}
+
+/* ==========================================================================
+   Button Components
+   ========================================================================== */
+
+/* Primary Button */
+.app-button-primary {
+  --background: #10664F;
+  --color: white;
+  --background-activated: #085E4A;
+  --background-focused: #085E4A;
+  --background-hover: #0e5a46;
+  --box-shadow: 0 10px 20px rgba(16, 102, 79, 0.3);
+  --border-radius: 12px;
+  --padding-top: 1.25rem;
+  --padding-bottom: 1.25rem;
+  --padding-start: 2rem;
+  --padding-end: 2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.app-button-primary:hover {
+  --box-shadow: 0 15px 25px rgba(16, 102, 79, 0.4);
+  transform: translateY(-3px);
+}
+
+/* Outline Button */
+.outline-button, .app-button-outline {
+  --background: transparent;
+  --background-activated: rgba(16, 102, 79, 0.1);
+  --background-focused: rgba(16, 102, 79, 0.1);
+  --background-hover: rgba(16, 102, 79, 0.05);
+  --color: #10664F;
+  --border-width: 2px;
+  --border-color: #10664F;
+  --border-style: solid;
+  --box-shadow: 0 8px 15px -5px rgba(16, 102, 79, 0.1);
+}
+
+.outline-button:hover, .app-button-outline:hover {
+  --box-shadow: 0 12px 20px -5px rgba(16, 102, 79, 0.15);
+  transform: translateY(-3px);
+}
+
+/* Tertiary Button */
+.app-button-tertiary {
+  --background: var(--ion-color-tertiary);
+  --color: white;
+  --background-activated: var(--ion-color-tertiary-shade);
+  --background-focused: var(--ion-color-tertiary-shade);
+  --background-hover: var(--ion-color-tertiary-shade);
+  --box-shadow: 0 10px 20px rgba(8, 94, 74, 0.3);
+  --border-radius: 12px;
+  --padding-top: 1.25rem;
+  --padding-bottom: 1.25rem;
+  --padding-start: 2rem;
+  --padding-end: 2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.app-button-tertiary:hover {
+  --box-shadow: 0 15px 25px rgba(8, 94, 74, 0.4);
+  transform: translateY(-3px);
+}
+
+/* Button with Icon */
+.button-with-icon {
+  --padding-start: 2rem;
+  --padding-end: 2rem;
+  --padding-top: 1.25rem;
+  --padding-bottom: 1.25rem;
+  --border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  min-width: 160px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.button-with-icon:hover {
+  transform: translateY(-2px);
+}
+
+.button-with-icon::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.button-with-icon:hover::after {
+  transform: translateX(0);
+}
+
+/* Back Button */
+.back-btn {
+  --color: #10664F;
+  --border-color: #10664F;
+  --border-width: 2px;
+  --border-radius: 12px;
+  --padding-top: 1.25rem;
+  --padding-bottom: 1.25rem;
+  --padding-start: 1.5rem;
+  --padding-end: 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin: 0.5rem 0;
+}
+
+.back-btn:hover {
+  --background: rgba(16, 102, 79, 0.08);
+  --box-shadow: 0 4px 15px rgba(16, 102, 79, 0.1);
+}
+
+/* Forgot Password & Signup Button */
+.forgot-btn, .signup-btn {
+  --color: #10664F;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.forgot-btn:hover, .signup-btn:hover {
+  --color: #085E4A;
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Layout Components
+   ========================================================================== */
+
+/* Section containers */
+.app-section {
+  padding-top: var(--section-spacing);
+  padding-bottom: var(--section-spacing);
+}
+
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Settings Cards Container */
+.settings-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Theme segment control */
+.theme-segment {
+  --background: rgba(255, 255, 255, 0.7);
+  --background-checked: #10664F;
+  --color: #666;
+  --color-checked: white;
+  --border-radius: 999px;
+  min-width: 160px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.dark .theme-segment {
+  --background: rgba(26, 26, 26, 0.7);
+  --background-checked: #10664F;
+  --color: #bbb;
+  --color-checked: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Background patterns */
+.bg-grid-pattern {
+  background-size: 20px 20px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+}
+
+.dark .bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+/* Text gradient */
+.text-gradient {
+  background: linear-gradient(135deg, #10664F, #085E4A);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ==========================================================================
+   Animation Components
+   ========================================================================== */
+
+/* Fade In */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+/* Fade In Up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.8s var(--animation-timing) forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+/* Fade In Slide Up (slightly different from fade-in-up) */
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-slide-up {
+  opacity: 0;
+  animation: fadeInSlideUp 0.8s ease-out forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+/* Float Animation */
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(1deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+.float-animation {
+  animation: float 8s ease-in-out infinite;
+}
+
+/* Staggered Card Animations */
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.staggered-card {
+  opacity: 0;
+  animation: fadeInCard 0.6s var(--animation-timing) forwards;
+}
+
+.staggered-card:nth-child(1) { animation-delay: 0.15s; }
+.staggered-card:nth-child(2) { animation-delay: 0.3s; }
+.staggered-card:nth-child(3) { animation-delay: 0.45s; }
+.staggered-card:nth-child(4) { animation-delay: 0.6s; }
+.staggered-card:nth-child(5) { animation-delay: 0.75s; }
+
+/* ==========================================================================
+   Menu Components
+   ========================================================================== */
+
+/* Modern Menu */
+.modern-menu {
+  --width: 280px;
+  --background: var(--card-background-light);
+}
+
+.dark .modern-menu {
+  --background: var(--card-background-dark);
+}
+
+/* Menu Content */
+.menu-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0;
+}
+
+/* Menu Header */
+.menu-header {
+  padding: 2rem 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.app-logo {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.logo-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.app-title {
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.dark .app-title {
+  color: var(--text-primary-dark);
+}
+
+/* Menu Divider */
+.menu-divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.08);
+  margin: 0.5rem 1.5rem 1rem;
+}
+
+.dark .menu-divider {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Menu Items Container */
+.menu-items {
+  flex: 1;
+  padding: 0.5rem 1rem;
+}
+
+/* Menu Item */
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--text-secondary);
+}
+
+.dark .menu-item {
+  color: var(--text-secondary-dark);
+}
+
+.menu-item:hover {
+  background: rgba(16, 102, 79, 0.05);
+  color: var(--text-primary);
+}
+
+.dark .menu-item:hover {
+  background: rgba(16, 102, 79, 0.1);
+  color: var(--text-primary-dark);
+}
+
+.menu-item.active {
+  background: rgba(16, 102, 79, 0.1);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.dark .menu-item.active {
+  background: rgba(16, 102, 79, 0.2);
+  color: var(--text-primary-dark);
+}
+
+.menu-item.logout-item {
+  color: #ef4444;
+}
+
+.dark .menu-item.logout-item {
+  color: #f87171;
+}
+
+.menu-item.logout-item:hover {
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.dark .menu-item.logout-item:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Menu Icon */
+.menu-icon {
+  margin-right: 1rem;
+  font-size: 1.25rem;
+}
+
+/* Menu Label */
+.menu-label {
+  font-size: var(--font-size-normal);
+}
+
+/* Menu Footer */
+.menu-footer {
+  padding: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.dark .menu-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.theme-icon {
+  font-size: 1.25rem;
+  margin: 0 0.5rem;
+}
+
+.light-icon {
+  color: #f59e0b;
+}
+
+.dark-icon {
+  color: #6366f1;
+}
+
+.theme-toggle-switch {
+  --background: #e5e7eb;
+  --background-checked: #6366f1;
+  --handle-background: #f59e0b;
+  --handle-background-checked: #ffffff;
+}
+
+/* App Version */
+.app-version {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.dark .app-version {
+  color: var(--text-secondary-dark);
+}
+
+/* Menu Transitions */
+@keyframes fadeInMenuItems {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.menu-item {
+  animation: fadeInMenuItems 0.4s var(--animation-timing) forwards;
+  opacity: 0;
+}
+
+.menu-item:nth-child(1) { animation-delay: 0.1s; }
+.menu-item:nth-child(2) { animation-delay: 0.2s; }
+.menu-item:nth-child(3) { animation-delay: 0.3s; }
+.menu-item:nth-child(4) { animation-delay: 0.4s; }
+
+/* ==========================================================================
+   Responsive Adjustments
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .button-with-icon {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .app-card {
+    padding: 1.25rem;
+  }
+  
+  .modern-menu {
+    --width: 260px;
+  }
+  
+  .menu-header {
+    padding: 1.5rem 1rem 0.75rem;
+  }
+  
+  .app-logo {
+    width: 60px;
+    height: 60px;
+  }
+}
