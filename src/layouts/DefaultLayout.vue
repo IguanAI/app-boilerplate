@@ -4,7 +4,7 @@
       <ion-toolbar class="toolbar-container">
         <ion-buttons slot="start">
           <ion-menu-button v-if="showMenu" class="menu-button"></ion-menu-button>
-          <ion-button v-else @click="goBack" class="back-button" fill="clear">
+          <ion-button v-else @click="goBack" class="back-button" fill="clear" shape="round">
             <ion-icon :icon="arrowBackOutline" slot="icon-only"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -110,7 +110,7 @@ html.dark .back-button {
 
 .dark .menu-button,
 html.dark .menu-button {
-  --background: rgba(255, 255, 255, 0.1);
+
   --background-hover: rgba(255, 255, 255, 0.2);
   --background-focused: rgba(255, 255, 255, 0.2);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -124,8 +124,6 @@ html.dark .menu-button {
 }
 
 .menu-button {
-  --border-radius: 50%;
-  --background: rgba(16, 102, 79, 0.1);
   --background-hover: rgba(16, 102, 79, 0.2);
   --background-hover-opacity: 1;
   --background-focused: rgba(16, 102, 79, 0.2);
@@ -146,15 +144,14 @@ html.dark .menu-button {
 }
 
 .back-button {
-  --border-radius: 50%;
-  --background: rgba(16, 102, 79, 0.1);
+  --border-style: none;
+  --border-width: 0;
   --background-hover: rgba(16, 102, 79, 0.2);
   --background-hover-opacity: 1;
   --background-focused: rgba(16, 102, 79, 0.2);
   --background-focused-opacity: 1;
   --padding-start: 8px;
   --padding-end: 8px;
-  --icon-font-size: 1.5rem;
   --icon-margin-top: 0;
   --icon-margin-bottom: 0;
   --icon-margin-start: 0;
@@ -166,6 +163,7 @@ html.dark .menu-button {
   margin-left: 4px;
   transition: all 0.2s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .back-button:hover {
@@ -173,9 +171,12 @@ html.dark .menu-button {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+ion-buttons {
+  background:
+}
+
 .dark .back-button,
 html.dark .back-button {
-  --background: rgba(255, 255, 255, 0.1);
   --background-hover: rgba(255, 255, 255, 0.2);
   --background-focused: rgba(255, 255, 255, 0.2);
   --icon-color: #ffffff;

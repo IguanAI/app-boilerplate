@@ -38,8 +38,7 @@ onMounted(() => {
 
 <style scoped>
 .theme-switcher {
-  --padding-start: 16px;
-  --padding-end: 16px;
+
   --min-height: 48px;
   --background: transparent !important;
 }

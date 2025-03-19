@@ -77,6 +77,11 @@
   background: var(--card-background-dark);
 }
 
+.dark .app-info-card p,
+.dark .version-info span {
+  color: var(--text-primary-dark) !important;
+}
+
 .app-card:hover {
   transform: var(--hover-lift);
   box-shadow: var(--card-shadow-hover);

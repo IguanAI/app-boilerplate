@@ -292,6 +292,7 @@ onMounted(() => {
 .dark .app-floating-controls {
   background-color: rgba(23, 23, 23, 0.4);
   border-color: rgba(255, 255, 255, 0.05);
+  width: 95%;
 }
 
 /* Animations */
