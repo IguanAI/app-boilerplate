@@ -1,6 +1,6 @@
 <template>
   <ion-page class="default-layout-page">
-    <ion-header class="ion-no-border transparent-header" mode="ios">
+    <ion-header class="ion-no-border transparent-header">
       <ion-toolbar class="toolbar-container">
         <ion-buttons slot="start" class="equal-width-buttons">
           <ion-menu-button v-if="showMenu" class="menu-button"></ion-menu-button>
@@ -98,10 +98,7 @@ const goBack = () => {
   --color: #10664F !important; /* Green text in light mode */
   opacity: 1;
   position: relative; /* Needed for absolute positioning of logo */
-  min-height: 56px; /* Standard height for iOS */
-  --min-height: 56px !important; /* Force minimum height */
-  --padding-top: 8px !important; /* Standard padding for iOS */
-  --padding-bottom: 8px !important;
+  /* These are now handled by platform-specific selectors */
 }
 
 /* Make sure dark mode text is visible */
@@ -110,7 +107,7 @@ html.dark .toolbar-container {
   --color: #ffffff !important;
 }
 
-/* Android-specific fixes - using safe area insets */
+/* Android-specific fixes - using safe area insets - RESTORED */
 .md ion-header {
   margin-top: var(--ion-safe-area-top) !important; /* Use safe area insets */
   height: auto !important;
@@ -127,6 +124,7 @@ html.dark .toolbar-container {
   padding-bottom: 12px !important;
   --padding-start: 8px !important;
   --padding-end: 8px !important;
+  margin-top: 10px; /* Re-add this explicit margin that was removed */
 }
 
 /* iOS specific fixes - reduce padding */
@@ -142,9 +140,10 @@ html.dark .toolbar-container {
   --padding-bottom: 4px !important;
 }
 
-/* Move logo down on Android devices */
+/* Move logo down on Android devices - RESTORE */
 .md .logo-container {
   top: 60% !important; /* Lower the logo position */
+  transform: translate(-50%, -40%) !important; /* Adjust transform */
 }
 
 /* Ensure buttons are visible and properly placed */

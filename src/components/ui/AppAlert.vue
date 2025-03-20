@@ -4,7 +4,7 @@
     :header="header"
     :sub-header="subHeader"
     :message="message"
-    :buttons="buttons"
+    :buttons="getButtonsWithDelay"
     :css-class="getCssClass"
     @didDismiss="onDismiss"
   ></ion-alert>
@@ -19,8 +19,11 @@ interface Props {
   header?: string;
   subHeader?: string;
   message?: string;
-  type?: 'default' | 'success' | 'warning' | 'error' | 'info';
+  type?: 'default' | 'success' | 'warning' | 'error' | 'info' | 'rate-limit';
   buttons?: any[];
+  autoClose?: boolean;
+  autoCloseDelay?: number;
+  errorCode?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -30,9 +33,12 @@ const props = withDefaults(defineProps<Props>(), {
   message: '',
   type: 'default',
   buttons: () => ['OK'],
+  autoClose: false,
+  autoCloseDelay: 5000,
+  errorCode: '',
 });
 
-const emit = defineEmits(['update:isOpen', 'didDismiss']);
+const emit = defineEmits(['update:isOpen', 'didDismiss', 'retry']);
 
 // CSS class based on alert type
 const getCssClass = computed(() => {
@@ -47,9 +53,32 @@ const getCssClass = computed(() => {
       return `${baseClass} app-alert--error`;
     case 'info':
       return `${baseClass} app-alert--info`;
+    case 'rate-limit':
+      return `${baseClass} app-alert--rate-limit`;
     default:
       return baseClass;
   }
+});
+
+// Add retry button for rate limit errors
+const getButtonsWithDelay = computed(() => {
+  // For rate limit errors, add a retry button
+  if (props.type === 'rate-limit' && props.errorCode === 'RATE_LIMIT_EXCEEDED') {
+    return [
+      {
+        text: 'Try Again',
+        handler: () => {
+          emit('retry');
+        }
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel'
+      }
+    ];
+  }
+  
+  return props.buttons;
 });
 
 // Handle dismissal
@@ -62,6 +91,11 @@ const onDismiss = () => {
 watch(() => props.isOpen, (newVal) => {
   if (!newVal) {
     emit('update:isOpen', false);
+  } else if (props.autoClose) {
+    // Auto close the alert after delay
+    setTimeout(() => {
+      emit('update:isOpen', false);
+    }, props.autoCloseDelay);
   }
 });
 </script>
@@ -91,5 +125,30 @@ watch(() => props.isOpen, (newVal) => {
 .app-alert--info {
   --background: var(--ion-color-primary-tint);
   --color: var(--ion-color-primary-contrast);
+}
+
+.app-alert--rate-limit {
+  --background: var(--ion-color-warning-tint);
+  --color: var(--ion-color-warning-contrast);
+}
+
+/* Animation for rate limit alerts */
+@keyframes countdown {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+
+.app-alert--rate-limit::part(message) {
+  position: relative;
+}
+
+.app-alert--rate-limit::part(message)::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  height: 2px;
+  background-color: var(--ion-color-warning);
+  animation: countdown var(--countdown-time, 60s) linear forwards;
 }
 </style>

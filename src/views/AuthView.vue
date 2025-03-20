@@ -587,14 +587,17 @@
         v-model:is-open="errorAlert.isOpen"
         :header="errorAlert.header"
         :message="errorAlert.message"
-        type="error"
+        :type="errorAlert.type"
+        :error-code="errorAlert.errorCode"
+        @retry="handleRetry"
       />
       
       <app-alert
         v-model:is-open="successAlert.isOpen"
         :header="successAlert.header"
         :message="successAlert.message"
-        type="success"
+        :type="successAlert.type"
+        auto-close
       />
       
       <ion-loading
@@ -684,13 +687,16 @@ const verificationIdentifier = ref('');
 const errorAlert = reactive({
   isOpen: false,
   header: '',
-  message: ''
+  message: '',
+  type: 'error' as 'default' | 'success' | 'warning' | 'error' | 'info' | 'rate-limit',
+  errorCode: ''
 });
 
 const successAlert = reactive({
   isOpen: false,
   header: '',
-  message: ''
+  message: '',
+  type: 'success' as 'default' | 'success' | 'warning' | 'error' | 'info' | 'rate-limit'
 });
 
 // Computed title based on mode
@@ -707,11 +713,45 @@ const pageTitle = computed(() => {
   }
 });
 
+// Error processing helper
+const processApiError = (error: any) => {
+  // Check for rate limit error
+  if (error.status === 429 || error.error?.code === 'RATE_LIMIT_EXCEEDED') {
+    const resetInSeconds = error.error?.details?.resetInSeconds || 60;
+    const limitType = error.error?.message?.includes('login') ? 'login' : 
+                     error.error?.message?.includes('register') ? 'registration' : 
+                     error.error?.message?.includes('password') ? 'password reset' : 'request';
+                     
+    // Show rate limit error with countdown
+    errorAlert.header = t('common.rateLimitExceeded');
+    errorAlert.message = `You've reached the ${limitType} limit. Please try again in ${resetInSeconds} seconds.`;
+    errorAlert.isOpen = true;
+    errorAlert.type = 'rate-limit';
+    errorAlert.errorCode = 'RATE_LIMIT_EXCEEDED';
+    
+    // Set custom CSS variable for countdown animation
+    document.documentElement.style.setProperty('--countdown-time', `${resetInSeconds}s`);
+    
+    return;
+  }
+  
+  // Use friendly message if available
+  if (error.friendlyMessage) {
+    showError(error.friendlyMessage);
+    return;
+  }
+  
+  // Fall back to error message
+  showError(error.error?.message || error.message || t('common.error'));
+};
+
 // Show error alert
 const showError = (message: string) => {
   errorAlert.header = t('common.error');
   errorAlert.message = message;
   errorAlert.isOpen = true;
+  errorAlert.type = 'error';
+  errorAlert.errorCode = '';
 };
 
 // Show success alert
@@ -763,7 +803,7 @@ const handleTraditionalLogin = async () => {
     // Redirect to home or protected route
     router.push(redirectUrl);
   } catch (error: any) {
-    showError(error.message || t('auth.errors.invalidCredentials'));
+    processApiError(error);
   } finally {
     showLoading.value = false;
     authStore.setLoading(false);
@@ -792,7 +832,7 @@ const handleTraditionalRegister = async () => {
     // Redirect to home
     router.push('/');
   } catch (error: any) {
-    showError(error.message || t('common.error'));
+    processApiError(error);
   } finally {
     showLoading.value = false;
     authStore.setLoading(false);
@@ -817,17 +857,17 @@ const handleSecureLogin = async () => {
       router.push(redirectUrl);
     } catch (error: any) {
       // Check if it's a 2FA required error
-      if (error.code === 'TWO_FACTOR_REQUIRED') {
+      if (error.error?.code === 'TWO_FACTOR_REQUIRED' || error.code === 'TWO_FACTOR_REQUIRED') {
         // Set the 2FA required flag and email
         twoFactorRequired.value = true;
-        twoFactorEmail.value = error.email;
+        twoFactorEmail.value = error.email || error.error?.details?.email || email.value;
       } else {
         // Rethrow other errors
         throw error;
       }
     }
   } catch (error: any) {
-    showError(error.message || t('auth.errors.invalidCredentials'));
+    processApiError(error);
   } finally {
     showLoading.value = false;
     authStore.setLoading(false);
@@ -858,7 +898,7 @@ const handleTwoFactorVerification = async () => {
     // Redirect to home or protected route
     router.push(redirectUrl);
   } catch (error: any) {
-    showError(error.message || t('auth.errors.invalidVerificationCode'));
+    processApiError(error);
   } finally {
     showLoading.value = false;
     authStore.setLoading(false);
@@ -888,7 +928,7 @@ const handleSecureRegister = async () => {
     // Redirect to home
     router.push('/');
   } catch (error: any) {
-    showError(error.message || t('common.error'));
+    processApiError(error);
   } finally {
     showLoading.value = false;
     authStore.setLoading(false);
@@ -919,17 +959,18 @@ const handleEasyLogin = async () => {
       router.push(redirectUrl);
     } catch (error: any) {
       // Check if it's a verification required error
-      if (error.code === 'VERIFICATION_REQUIRED') {
+      if (error.error?.code === 'VERIFICATION_REQUIRED' || error.code === 'VERIFICATION_REQUIRED') {
         // Set the verification required flag and identifier
         verificationRequired.value = true;
-        verificationIdentifier.value = error.identifier;
+        verificationIdentifier.value = error.identifier || error.error?.details?.identifier || 
+                                      (verificationMethod.value === 'email' ? email.value : phone.value);
       } else {
         // Rethrow other errors
         throw error;
       }
     }
   } catch (error: any) {
-    showError(error.message || t('common.error'));
+    processApiError(error);
   } finally {
     showLoading.value = false;
     authStore.setLoading(false);
@@ -960,7 +1001,7 @@ const handleVerificationCode = async () => {
     // Redirect to home or protected route
     router.push(redirectUrl);
   } catch (error: any) {
-    showError(error.message || t('auth.errors.invalidVerificationCode'));
+    processApiError(error);
   } finally {
     showLoading.value = false;
     authStore.setLoading(false);
@@ -983,7 +1024,7 @@ const handleEasyRegister = async () => {
     // Redirect to home
     router.push('/');
   } catch (error: any) {
-    showError(error.message || t('common.error'));
+    processApiError(error);
   } finally {
     showLoading.value = false;
     authStore.setLoading(false);
@@ -1006,10 +1047,44 @@ const handleForgotPassword = async () => {
       mode.value = 'login';
     }, 2000);
   } catch (error: any) {
-    showError(error.message || t('common.error'));
+    processApiError(error);
   } finally {
     showLoading.value = false;
     authStore.setLoading(false);
+  }
+};
+
+// Handle retry from rate limit error
+const handleRetry = () => {
+  // Based on the current mode, retry the appropriate action
+  switch (mode.value) {
+    case 'login':
+      if (twoFactorRequired.value) {
+        handleTwoFactorVerification();
+      } else if (verificationRequired.value) {
+        handleVerificationCode();
+      } else {
+        if (authProvider.value === 'traditional') {
+          handleTraditionalLogin();
+        } else if (authProvider.value === 'secure') {
+          handleSecureLogin();
+        } else if (authProvider.value === 'easy') {
+          handleEasyLogin();
+        }
+      }
+      break;
+    case 'register':
+      if (authProvider.value === 'traditional') {
+        handleTraditionalRegister();
+      } else if (authProvider.value === 'secure') {
+        handleSecureRegister();
+      } else if (authProvider.value === 'easy') {
+        handleEasyRegister();
+      }
+      break;
+    case 'forgot':
+      handleForgotPassword();
+      break;
   }
 };
 

@@ -48,9 +48,16 @@ import './assets/transitions-fix.css';
 import en from '@/locales/en.json';
 import es from '@/locales/es.json';
 
+/* Environment config */
+import devConfig from '@/environments/development';
+
 /* Services */
 import { initializeAnalytics } from '@/services/analytics';
 import { initializeLogging } from '@/services/logging';
+
+/* Override config with environment-specific config */
+import config from '@/config';
+Object.assign(config, devConfig);
 
 /* Create Pinia store */
 const pinia = createPinia();
@@ -103,8 +110,8 @@ const ionicConfig = {
   backButtonText: '',
   swipeBackEnabled: false,    // Disable swipe to prevent issues
   initialBreakpoint: 1.0,     // Ensure sheets open completely
-  mode: 'ios',                // Force iOS mode for all platforms
-  statusBarPadding: false     // Disable status bar padding
+  // Don't force iOS mode - let Android use Material Design
+  statusBarPadding: true      // Re-enable status bar padding (important for Android)
 };
 
 const app = createApp(App)

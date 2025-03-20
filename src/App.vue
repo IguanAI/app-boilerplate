@@ -299,6 +299,11 @@ onBeforeMount(() => {
   --ion-safe-area-top: env(safe-area-inset-top, 0px); /* Smaller default for iOS */
 }
 
+/* Restore Android safe area to the full value */
+.md {
+  --ion-safe-area-top: env(safe-area-inset-top, 28px); /* Larger default for Android */
+}
+
 /* Base App Styling */
 .dark-mode-background {
   display: none;

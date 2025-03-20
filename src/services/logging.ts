@@ -61,6 +61,38 @@ export const fatal = (message: string, error?: any): void => {
   }
 };
 
+// API Error logging with special handling for rate limits and other API errors
+export const apiError = (endpoint: string, errorResponse: any): void => {
+  const statusCode = errorResponse?.status || 'unknown';
+  const errorCode = errorResponse?.error?.code || 'UNKNOWN_ERROR';
+  const errorMessage = errorResponse?.error?.message || errorResponse?.message || 'Unknown API error';
+  
+  // Special handling for rate limited endpoints
+  if (statusCode === 429) {
+    warn(`API Rate Limited: ${endpoint}`, { 
+      endpoint, 
+      statusCode,
+      errorCode,
+      errorMessage,
+    });
+    
+    // Log rate limit errors specially for tracking in production
+    if (!import.meta.env.DEV) {
+      // Track API rate limit errors separately
+      // sendToExternalService(`Rate limit exceeded: ${endpoint}`, errorResponse, false, 'api_rate_limit');
+    }
+  } else {
+    // Standard API error logging
+    error(`API Error: ${endpoint}`, { 
+      endpoint, 
+      statusCode,
+      errorCode,
+      errorMessage,
+      details: errorResponse?.error?.details || null
+    });
+  }
+};
+
 // Initialize logger
 export const initializeLogging = (): void => {
   // Set up global error handlers
@@ -107,5 +139,6 @@ export default {
   warn,
   error,
   fatal,
+  apiError,
   initializeLogging,
 };

@@ -42,8 +42,43 @@ export class TraditionalAuthProvider implements AuthProvider {
       const user = mockUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
       
       if (!user) {
-        throw new Error('Invalid email or password');
+        // Format error to match API error format
+        throw {
+          error: {
+            code: 'INVALID_CREDENTIALS',
+            message: 'Invalid email or password',
+          },
+          status: 401,
+          friendlyMessage: 'Invalid email or password. Please try again.'
+        };
       }
+      
+      // Simulate rate limiting for demonstration purposes
+      // Note: In production this would be handled by the server
+      const loginKey = `login_attempts_${email.toLowerCase()}`;
+      const loginAttemptsStr = sessionStorage.getItem(loginKey) || '0';
+      const loginAttempts = parseInt(loginAttemptsStr, 10);
+      
+      if (loginAttempts >= 5) {
+        const resetTime = Math.floor(Date.now() / 1000) + 60; // 1 minute
+        
+        throw {
+          error: {
+            code: 'RATE_LIMIT_EXCEEDED',
+            message: 'Too many login attempts. Please try again later.',
+            details: {
+              limit: 5,
+              reset: resetTime,
+              resetInSeconds: 60
+            }
+          },
+          status: 429,
+          friendlyMessage: 'Too many login attempts. Please try again in 60 seconds.'
+        };
+      }
+      
+      // Increment login attempts
+      sessionStorage.setItem(loginKey, (loginAttempts + 1).toString());
       
       // In a real app, you would verify the password here
       // For demo purposes, any password works
@@ -67,11 +102,14 @@ export class TraditionalAuthProvider implements AuthProvider {
         sessionStorage.setItem('auth', JSON.stringify(authData));
       }
       
+      // Reset login attempts counter on successful login
+      sessionStorage.removeItem(loginKey);
+      
       // Track login event
       trackEvent('login', { method: 'email' });
       
       return { user, expiresAt };
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Login error:', error);
       throw error;
     }
@@ -87,11 +125,44 @@ export class TraditionalAuthProvider implements AuthProvider {
       
       const { email, name } = userData;
       
+      // Simulate rate limiting for registration
+      const registerKey = 'register_attempts';
+      const registerAttemptsStr = sessionStorage.getItem(registerKey) || '0';
+      const registerAttempts = parseInt(registerAttemptsStr, 10);
+      
+      if (registerAttempts >= 3) {
+        const resetTime = Math.floor(Date.now() / 1000) + 60; // 1 minute
+        
+        throw {
+          error: {
+            code: 'RATE_LIMIT_EXCEEDED',
+            message: 'Too many registration attempts. Please try again later.',
+            details: {
+              limit: 3,
+              reset: resetTime,
+              resetInSeconds: 60
+            }
+          },
+          status: 429,
+          friendlyMessage: 'You\'ve reached the registration limit. Please try again in 60 seconds.'
+        };
+      }
+      
+      // Increment registration attempts
+      sessionStorage.setItem(registerKey, (registerAttempts + 1).toString());
+      
       // Check if user already exists
       const existingUser = mockUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
       
       if (existingUser) {
-        throw new Error('Email already in use');
+        throw {
+          error: {
+            code: 'EMAIL_EXISTS',
+            message: 'Email already in use',
+          },
+          status: 409,
+          friendlyMessage: 'An account with this email already exists. Please use a different email address.'
+        };
       }
       
       // Create new user (in a real app, this would be done by the server)
@@ -104,6 +175,9 @@ export class TraditionalAuthProvider implements AuthProvider {
       
       // Add to mock database (this is just for demo purposes)
       mockUsers.push(newUser);
+      
+      // Reset registration attempts counter on successful registration
+      sessionStorage.removeItem(registerKey);
       
       // Track registration event
       trackEvent('sign_up', { method: 'email' });
@@ -118,7 +192,7 @@ export class TraditionalAuthProvider implements AuthProvider {
       sessionStorage.setItem('auth', JSON.stringify(authData));
       
       return { user: newUser, expiresAt: null };
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Registration error:', error);
       throw error;
     }
@@ -138,9 +212,17 @@ export class TraditionalAuthProvider implements AuthProvider {
       
       // Track logout event
       trackEvent('logout');
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Logout error:', error);
-      throw error;
+      // Format error to match API error format
+      throw {
+        error: {
+          code: 'LOGOUT_ERROR',
+          message: error instanceof Error ? error.message : 'Error during logout',
+        },
+        status: 500,
+        friendlyMessage: 'Unable to complete the logout process. Please try again.'
+      };
     }
   }
   
@@ -152,14 +234,59 @@ export class TraditionalAuthProvider implements AuthProvider {
       // Simulate API call
       await delay(1000);
       
+      // Simulate rate limiting for password reset
+      const resetKey = 'password_reset_attempts';
+      const resetAttemptsStr = sessionStorage.getItem(resetKey) || '0';
+      const resetAttempts = parseInt(resetAttemptsStr, 10);
+      
+      if (resetAttempts >= 3) {
+        const resetTime = Math.floor(Date.now() / 1000) + 60; // 1 minute
+        
+        throw {
+          error: {
+            code: 'RATE_LIMIT_EXCEEDED',
+            message: 'Too many password reset attempts. Please try again later.',
+            details: {
+              limit: 3,
+              reset: resetTime,
+              resetInSeconds: 60
+            }
+          },
+          status: 429,
+          friendlyMessage: 'Too many password reset attempts. Please try again in 60 seconds.'
+        };
+      }
+      
+      // Increment password reset attempts
+      sessionStorage.setItem(resetKey, (resetAttempts + 1).toString());
+      
       // In a real app, this would send an email
       console.log(`Password reset email sent to ${email}`);
       
+      // Reset attempts counter automatically after 60 seconds
+      setTimeout(() => {
+        sessionStorage.removeItem(resetKey);
+      }, 60000);
+      
       // Track password reset request event
       trackEvent('password_reset_request');
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Password reset request error:', error);
-      throw error;
+      
+      // If error is already formatted, re-throw it
+      if (error && typeof error === 'object' && 'error' in error && 'status' in error) {
+        throw error;
+      }
+      
+      // Otherwise format it
+      throw {
+        error: {
+          code: 'PASSWORD_RESET_ERROR',
+          message: error instanceof Error ? error.message : 'Error during password reset request',
+        },
+        status: 500,
+        friendlyMessage: 'Unable to process your password reset request. Please try again later.'
+      };
     }
   }
   
@@ -193,7 +320,7 @@ export class TraditionalAuthProvider implements AuthProvider {
       }
       
       return { user, expiresAt };
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Error parsing auth data:', error);
       return null;
     }
